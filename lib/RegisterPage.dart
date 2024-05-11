@@ -153,9 +153,31 @@ class RegisterPage extends StatelessWidget {
                   SizedBox(
                     height: 45,
                   ),
-                  Text(
-                    " ────────────── Or with ──────────────",
-                    style: Interrstyle.copyWith(fontSize: 13),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Divider(
+                          color:
+                              Colors.white, 
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 7.0),
+                        child: Text(
+                          "Or with",
+                          style: TextStyle(
+                              color: Color(0xfffffffff),
+                              fontSize:
+                                  13),
+                        ),
+                      ),
+                      Expanded(
+                        child: Divider(
+                          color:
+                              Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: 45,

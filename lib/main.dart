@@ -156,9 +156,31 @@ class LoginPage extends StatelessWidget {
                 SizedBox(
                   height: 45,
                 ),
-                Text(
-                  " ────────────── Or with ──────────────",
-                  style: Interrstyle.copyWith(fontSize: 13),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Divider(
+                        color:
+                            Colors.white, // Atur warna garis sesuai kebutuhan
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 7.0),
+                      child: Text(
+                        "Or with",
+                        style: TextStyle(
+                            color: Color(0xfffffffff),
+                            fontSize:
+                                13), // Sesuaikan dengan gaya teks yang diinginkan
+                      ),
+                    ),
+                    Expanded(
+                      child: Divider(
+                        color:
+                            Colors.white, // Atur warna garis sesuai kebutuhan
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: 45,

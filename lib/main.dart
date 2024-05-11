@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'constans.dart';
 import 'RegisterPage.dart';
+import 'hidden_textfield.dart';
 
 void main() {
   runApp(const MyApp());
@@ -102,13 +103,7 @@ class LoginPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         color: whiteColor,
                       ),
-                      child: TextField(
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            suffixIcon: Icon(Icons.visibility_off),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 18, vertical: 16)),
-                      ),
+                      child: PasswordTextField(),
                     ),
                   ],
                 ),

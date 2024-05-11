@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'constans.dart';
 import 'RegisterPage.dart';
 
@@ -40,9 +41,12 @@ class LoginPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "WELCOME BACK",
-                  style: Poppinstyle.copyWith(
-                      fontSize: 35, fontWeight: FontWeight.w900),
+                  'Welcome Back',
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 35,
+                    color: Color(0xffffffff),
+                  ),
                 ),
                 SizedBox(
                   height: 11,

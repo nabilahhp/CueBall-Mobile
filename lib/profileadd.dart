@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_bl/main.dart';
+import 'package:mobile_bl/pass.dart';
 import 'constans.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -84,7 +85,13 @@ class Profiladd extends StatelessWidget {
                       // margin: EdgeInsets.symmetric(horizontal: 10),
                       height: 45,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CreatePass()),
+                          );
+                        },
                         child: Text(
                           "Next",
                           style: Interrrstyle.copyWith(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_bl/forgot.dart';
 import 'constans.dart';
 import 'RegisterPage.dart';
 import 'hidden_textfield.dart';
@@ -130,10 +131,21 @@ class LoginPage extends StatelessWidget {
                         )
                       ],
                     ),
-                    Text(
+                    GestureDetector(
+                      onTap: () {
+                        // Navigasi ke halaman pendaftaran
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ForgotPass()),
+                        );
+                      },
+                    child:  Text(
                       "Forgot Password?",
                       style: Interstyle.copyWith(fontSize: 13),
                     ),
+                    ),
+                    
                   ],
                 ),
                 SizedBox(

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_bl/main.dart';
 import 'constans.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'hidden_textfield.dart';
 
-class CreatePass extends StatelessWidget {
-  const CreatePass({Key? key}) : super(key: key);
+class ForgotPass extends StatelessWidget {
+  const ForgotPass({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class CreatePass extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Create Password',
+                  'Forgot Password?',
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w700,
                     fontSize: 35,
@@ -37,7 +37,7 @@ class CreatePass extends StatelessWidget {
                   height: 11,
                 ),
                 Text(
-                  "Please create a strong password to protect your account.",
+                  "Don’t worry! Please enter the email associated with your account.",
                   style: Interstyle.copyWith(fontSize: 15),
                   // textAlign: TextAlign.center,
                 ),
@@ -49,47 +49,27 @@ class CreatePass extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "Password",
-                      style: Interstyle.copyWith(
-                        fontSize: 14,
-                      ),
+                      "Email Address",
+                      style: Interstyle.copyWith(fontSize: 14),
                     ),
                     SizedBox(
                       height: 5,
                     ),
                     Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: whiteColor,
-                        ),
-                        child: PasswordTextFieldCPass1()),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "Confirm Password",
-                      style: Interstyle.copyWith(
-                        fontSize: 14,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: whiteColor,
+                      ),
+                      child: TextField(
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Enter Your Email Address",
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 18, vertical: 16)),
                       ),
                     ),
                     SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: whiteColor,
-                        ),
-                        child: PasswordTextFieldCPass2()),
-                  ],
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                
-                SizedBox(
                   height: 40,
                 ),
                 Container(
@@ -99,7 +79,7 @@ class CreatePass extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {},
                       child: Text(
-                        "Log In",
+                        "Send Link",
                         style: Interstyle.copyWith(fontWeight: FontWeight.bold),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -141,29 +121,31 @@ class CreatePass extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Don’t have an account? ",
+                      "Remember password? ",
                       style: Interstyle.copyWith(fontSize: 15),
                     ),
                     GestureDetector(
                       onTap: () {
                         // Navigasi ke halaman pendaftaran
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) => ()),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginPage()),
+                        );
                       },
                       child: Text(
-                        "Sign Up",
+                        "Login",
                         style: Interrrstyle.copyWith(fontSize: 15),
                       ),
                     ),
-                  ],
-                )
+                     ],
+                ),
               ],
             ),
+              ],
           ),
         ),
+      ),
       ),
     );
   }

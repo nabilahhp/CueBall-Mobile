@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'constans.dart';
+import 'package:mobile_bl/main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'hidden_textfield.dart';
 
@@ -88,7 +89,6 @@ class CreatePass extends StatelessWidget {
                 SizedBox(
                   height: 15,
                 ),
-                
                 SizedBox(
                   height: 40,
                 ),
@@ -141,17 +141,16 @@ class CreatePass extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Don’t have an account? ",
+                      "Already have an account? ",
                       style: Interstyle.copyWith(fontSize: 15),
                     ),
                     GestureDetector(
                       onTap: () {
                         // Navigasi ke halaman pendaftaran
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) => ()),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginPage()),
+                        );
                       },
                       child: Text(
                         "Sign Up",

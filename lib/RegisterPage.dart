@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mobile_bl/main.dart';
 import 'package:mobile_bl/number.dart';
 import 'constans.dart';
-import 'profileadd.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RegisterPage extends StatelessWidget {

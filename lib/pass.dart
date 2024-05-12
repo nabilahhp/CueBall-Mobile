@@ -153,7 +153,7 @@ class CreatePass extends StatelessWidget {
                         );
                       },
                       child: Text(
-                        "Sign Up",
+                        "Log In",
                         style: Interrrstyle.copyWith(fontSize: 15),
                       ),
                     ),

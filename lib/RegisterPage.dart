@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_bl/main.dart';
 import 'constans.dart';
+import 'profileadd.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -141,7 +142,13 @@ class RegisterPage extends StatelessWidget {
                       // margin: EdgeInsets.symmetric(horizontal: 10),
                       height: 45,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Profiladd()),
+                          );
+                        },
                         child: Text(
                           "Next",
                           style:
@@ -157,8 +164,7 @@ class RegisterPage extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: Divider(
-                          color:
-                              Colors.white, 
+                          color: Colors.white,
                         ),
                       ),
                       Padding(
@@ -166,15 +172,12 @@ class RegisterPage extends StatelessWidget {
                         child: Text(
                           "Or with",
                           style: TextStyle(
-                              color: Color(0xfffffffff),
-                              fontSize:
-                                  13),
+                              color: Color(0xfffffffff), fontSize: 13),
                         ),
                       ),
                       Expanded(
                         child: Divider(
-                          color:
-                              Colors.white,
+                          color: Colors.white,
                         ),
                       ),
                     ],

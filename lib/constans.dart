@@ -5,6 +5,7 @@ Color whiteColor = Color(0xFFFFFFFF);
 Color yellowColor = Color(0xFFFBBC05);
 
 Color buttonColor = Color(0xFFFBBC05);
+Color buttonColorWhite = Color(0xFFFFFFFF);
 Color AbuColor = Color(0xFFD8DADC);
 
 TextStyle Poppinstyle = GoogleFonts.dmSans(
@@ -23,3 +24,5 @@ TextStyle Interrrstyle = GoogleFonts.dmSans(
 );
 
 FontWeight bold = FontWeight.w900;
+
+const String tprofileimage = "lib/data/profile.png";

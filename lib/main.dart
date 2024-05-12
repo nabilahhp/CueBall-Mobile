@@ -98,13 +98,12 @@ class LoginPage extends StatelessWidget {
                       height: 5,
                     ),
                     Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: whiteColor,
-                      ),
-                      child: PasswordTextField(),
-                    ),
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: whiteColor,
+                        ),
+                        child: PasswordTextFieldLogin()),
                   ],
                 ),
                 SizedBox(

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class PasswordTextField extends StatefulWidget {
+class PasswordTextFieldLogin extends StatefulWidget {
   @override
-  _PasswordTextFieldState createState() => _PasswordTextFieldState();
+  _PasswordTextFieldStateLogin createState() => _PasswordTextFieldStateLogin();
 }
 
-class _PasswordTextFieldState extends State<PasswordTextField> {
+class _PasswordTextFieldStateLogin extends State<PasswordTextFieldLogin> {
   bool isLogoPressed = false;
 
   @override
@@ -27,6 +27,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
             TextField(
               obscureText: !isLogoPressed,
               decoration: InputDecoration(
+                hintText: "Password",
                 border: InputBorder.none,
                 contentPadding:
                     EdgeInsets.symmetric(horizontal: 18, vertical: 16),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_bl/main.dart';
+import 'package:mobile_bl/resetpass.dart';
 import 'constans.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -77,7 +78,13 @@ class ForgotPass extends StatelessWidget {
                     // margin: EdgeInsets.symmetric(horizontal: 10),
                     height: 45,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ResetPass()),
+                          );
+                      },
                       child: Text(
                         "Send Link",
                         style: Interstyle.copyWith(fontWeight: FontWeight.bold),

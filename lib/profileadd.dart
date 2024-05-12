@@ -86,7 +86,7 @@ class Profiladd extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {},
                         child: Text(
-                          "Skip",
+                          "Next",
                           style: Interrrstyle.copyWith(
                               fontWeight: FontWeight.bold),
                         ),

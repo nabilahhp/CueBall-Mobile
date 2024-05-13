@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'constans.dart';
 import 'package:mobile_bl/main.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'hidden_textfield.dart';
 
 class CreatePass extends StatelessWidget {
@@ -97,7 +98,27 @@ class CreatePass extends StatelessWidget {
                     // margin: EdgeInsets.symmetric(horizontal: 10),
                     height: 45,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.warning,
+                          animType: AnimType.topSlide,
+                          showCloseIcon: true,
+                          title: "Check Email",
+                          titleTextStyle: TextStyle(
+                              fontWeight: FontWeight.w900, fontSize: 25),
+                          desc:
+                              "We've sent a verification link to hello@gmail.com. Please check your inbox.",
+                          // btnCancelOnPress: () {},
+                          btnOkOnPress: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginPage()),
+                            );
+                          },
+                        ).show();
+                      },
                       child: Text(
                         "Log In",
                         style: Interstyle.copyWith(fontWeight: FontWeight.bold),

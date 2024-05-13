@@ -28,21 +28,21 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-
+  awesome_dialog: ^3.2.1
   cupertino_icons: ^1.0.6
   flutter:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
   google_fonts: ^6.2.1
   icon: ^2.2.1
-  flutter_launcher_icons: "^0.13.1"
 
-dev_dependencies:
+dev_dependencies: null
 
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/icon/icon.png"
-  min_sdk_android: 21 
+  min_sdk_android: 21
 
   flutter_lints: ^3.0.0
   flutter_test:
@@ -52,7 +52,6 @@ flutter_launcher_icons:
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
 flutter:
-
 
   assets:
     - lib/data/latar.png

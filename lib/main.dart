@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_bl/forgot.dart';
+import 'package:mobile_bl/widget_home/navigationbar.dart';
 import 'constans.dart';
 import 'RegisterPage.dart';
 import 'hidden_textfield.dart';
@@ -136,16 +137,14 @@ class LoginPage extends StatelessWidget {
                         // Navigasi ke halaman pendaftaran
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => ForgotPass()),
+                          MaterialPageRoute(builder: (context) => ForgotPass()),
                         );
                       },
-                    child:  Text(
-                      "Forgot Password?",
-                      style: Interstyle.copyWith(fontSize: 13),
+                      child: Text(
+                        "Forgot Password?",
+                        style: Interstyle.copyWith(fontSize: 13),
+                      ),
                     ),
-                    ),
-                    
                   ],
                 ),
                 SizedBox(
@@ -156,7 +155,13 @@ class LoginPage extends StatelessWidget {
                     // margin: EdgeInsets.symmetric(horizontal: 10),
                     height: 45,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NavigationMenu()),
+                        );
+                      },
                       child: Text(
                         "Log In",
                         style: Interstyle.copyWith(fontWeight: FontWeight.bold),

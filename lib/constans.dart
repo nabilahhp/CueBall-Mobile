@@ -36,3 +36,14 @@ class Dimension {
   // Detail
   static double get popularfoodimgsize => screenHeight / 2.41;
 }
+
+//profile punya bila
+const kPrimaryColor = Color(0xFFFBBC05);
+const kPrimaryLightColor = Color(0xFFFFECDF);
+const kPrimaryGradientColor = LinearGradient(
+  begin: Alignment.topLeft,
+  end: Alignment.bottomRight,
+  colors: [Colors.black, Color(0xFFFBBC05)],
+);
+const kSecondaryColor = Color(0xFF979797);
+const kTextColor = Colors.black;

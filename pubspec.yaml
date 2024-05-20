@@ -50,6 +50,10 @@ flutter_launcher_icons:
   flutter_test:
     sdk: flutter
 
+    ##-- ICON PACKAGE
+    cupertino_icons: ^1.0.2
+    line_awesome_flutter: ^2.0.0
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.

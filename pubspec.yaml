@@ -29,6 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   awesome_dialog: ^3.2.1
+  clippy_flutter: ^2.0.0-nullsafety.1
   cupertino_icons: ^1.0.6
   flutter:
     sdk: flutter
@@ -58,7 +59,6 @@ flutter_launcher_icons:
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
 flutter:
-
   assets:
     - lib/data/latar.png
     - lib/data/profile.png

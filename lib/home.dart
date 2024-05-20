@@ -25,7 +25,7 @@ class _homeState extends State<home>{
   void fetchData() async {
     try {
       // Lakukan permintaan ke API
-      var response = await http.get(Uri.parse('http://localhost/api_projek/get_makanan_api.php'));
+      var response = await http.get(Uri.parse('http://localhost/project_api/coba.php'));
       
       // Cek apakah permintaan berhasil (kode status 200)
       if (response.statusCode == 200) {

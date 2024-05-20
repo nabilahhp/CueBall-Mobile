@@ -43,8 +43,8 @@ class _NavigationMenuState extends State<NavigationMenu> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Iconsax.shop),
-            label: 'Shop',
+            icon: Icon(Iconsax.video_time),
+            label: 'bila cantik',
           ),
           BottomNavigationBarItem(
             icon: Icon(Iconsax.user),

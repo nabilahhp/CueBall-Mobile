@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:mobile_bl/RegisterPage.dart';
 import 'package:mobile_bl/home.dart';
+import 'package:mobile_bl/widget_home/detail_food.dart';
 
 class NavigationMenu extends StatefulWidget {
   const NavigationMenu({super.key});
@@ -16,7 +17,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
   static const List<Widget> _pages = <Widget>[
     home(),
     RegisterPage(),
-    // home(),
+    PopularFoodDetail()
   ];
 
   void _onItemTapped(int index) {

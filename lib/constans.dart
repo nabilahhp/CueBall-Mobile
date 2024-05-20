@@ -37,25 +37,3 @@ class Dimension {
   static double get popularfoodimgsize => screenHeight / 2.41;
 }
 =======
-//-- Profile Images
-const String tProfilepicImage = "lib/data/profilepic.jpg";
-
-//-- Profile Screen - Text
-const String tProfile = "Profile";
-const String eEditProfile = "Edit Profile";
-const String tLogoutDialogHeading = "Logout";
-const String tProfileHeading = "CueBall";
-const String tProfileSubHeading = "bila cantik";
-//-- Menu
-const String tMenu5 = tLogoutDialogHeading;
-const String tMenu1 = "Settings";
-const String tMenu4 = "Information";
-const String tMenu2 = "Billing Details";
-const String tMenu3 = "User Management";
-
-//-- Update Profile Screen - Text
-const String tDelete = "Delete";
-const String tJoined = "Joined";
-const String tJoinedAt = "jaman penjajahan";
-
->>>>>>> Stashed changes

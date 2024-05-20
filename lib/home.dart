@@ -2,9 +2,49 @@ import 'package:mobile_bl/widget_home/categorismeja.dart';
 import 'package:mobile_bl/widget_home/food.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class home extends StatelessWidget {
-  const home({Key? key}) : super(key: key);
+class home extends StatefulWidget {
+   const home({Key? key}) : super(key: key);
+
+    @override
+    State<home> createState() => _homeState();
+}
+
+class _homeState extends State<home>{
+      String namaLengkap = ""; // Inisialisasi namaLengkap dengan string kosong
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData(); // Panggil method fetchData saat widget pertama kali diinisialisasi
+  }
+
+  // Method untuk melakukan permintaan ke API
+  void fetchData() async {
+    try {
+      // Lakukan permintaan ke API
+      var response = await http.get(Uri.parse('http://localhost/api_projek/get_makanan_api.php'));
+      
+      // Cek apakah permintaan berhasil (kode status 200)
+      if (response.statusCode == 200) {
+        // Ubah respons JSON menjadi List<Map<String, dynamic>>
+        List<dynamic> data = json.decode(response.body);
+
+        // Ambil nilai nama lengkap dari objek pertama dalam array
+        setState(() {
+          namaLengkap = data.isNotEmpty ? data[0]['nama_lengkap'] : "";
+        });
+      } else {
+        // Jika permintaan tidak berhasil, cetak pesan kesalahan
+        print('Failed to load data: ${response.statusCode}');
+      }
+    } catch (error) {
+      // Tangani kesalahan jika terjadi
+      print('Error: $error');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +89,7 @@ class home extends StatelessWidget {
                             .start, // Mengatur alignment ke kiri
                         children: [
                           Text(
-                            'Welcome, XX X!',
+                            'Welcome, $namaLengkap!',
                             style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w700,
                               fontSize: 35,

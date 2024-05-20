@@ -29,7 +29,19 @@ class PopularFoodDetail extends StatelessWidget {
                   children: [
                     AppIcon(icon: Icons.arrow_back_ios)
                   ],
-              ))
+              )),
+              Positioned(
+                left: 0,
+                right: 0,
+                top: 285,
+                child: Container(
+                  padding: EdgeInsets.only(left: 20,right: 20, top: 20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.white
+                  ),
+                  
+                ))
         ],
       ),
     );

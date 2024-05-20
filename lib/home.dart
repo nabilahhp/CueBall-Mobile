@@ -1,5 +1,5 @@
 import 'package:mobile_bl/widget_home/categorismeja.dart';
-import 'package:mobile_bl/widget_home/categorisfood.dart';
+import 'package:mobile_bl/widget_home/food.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -229,7 +229,7 @@ class home extends StatelessWidget {
                     ),
                   ],
                 ),
-                Categorieswidgetfood()
+                food()
               ],
             ),
           ),

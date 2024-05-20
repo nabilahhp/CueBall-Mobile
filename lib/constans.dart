@@ -28,7 +28,7 @@ FontWeight bold = FontWeight.w900;
 
 const String tprofileimage = "lib/data/profile.png";
 
-<<<<<<< Updated upstream
+
 class Dimension {
   static double get screenHeight => Get.context!.height;
   static double get screenWidth => Get.context!.width;
@@ -36,4 +36,3 @@ class Dimension {
   // Detail
   static double get popularfoodimgsize => screenHeight / 2.41;
 }
-=======

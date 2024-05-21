@@ -6,6 +6,7 @@ Color whiteColor = Color(0xFFFFFFFF);
 Color yellowColor = Color(0xFFFBBC05);
 
 Color buttonColor = Color(0xFFFBBC05);
+Color buttonColorBlack = Colors.black;
 Color buttonColorWhite = Color(0xFFFFFFFF);
 Color AbuColor = Color(0xFFD8DADC);
 

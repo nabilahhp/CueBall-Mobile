@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_bl/RegisterPage.dart';
+import 'package:mobile_bl/changepass.dart';
 
 import 'components/profile_menu.dart';
 import 'components/profile_pic.dart';
@@ -12,7 +14,13 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Profile"),
+        title: Text("Profile", style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24,
+                    color: Colors.black,
+                  ),
+                  ),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(vertical: 20),
@@ -21,7 +29,7 @@ class ProfileScreen extends StatelessWidget {
             const ProfilePic(),
             const SizedBox(height: 20),
             ProfileMenu(
-              text: "My Account",
+              text: "Edit Profile",
               icon: "assets/icons/User Icon.svg",
               press: () => {Navigator.push(
                           context,
@@ -35,13 +43,17 @@ class ProfileScreen extends StatelessWidget {
               press: () {},
             ),
             ProfileMenu(
-              text: "Settings",
+              text: "Change Password",
               icon: "assets/icons/Settings.svg",
-              press: () {},
+              press: () => {Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChangePass()),
+                        )},
             ),
             ProfileMenu(
-              text: "Help Center",
-              icon: "assets/icons/Question mark.svg",
+              text: "Contact Us",
+              icon: "assets/icons/Conversation.svg",
               press: () {},
             ),
             ProfileMenu(

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'constans.dart';
 import 'package:mobile_bl/main.dart';
+import '../constans.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
-import 'hidden_textfield.dart';
+import '../hidden_textfield.dart';
 
-class CreatePass extends StatelessWidget {
-  const CreatePass({Key? key}) : super(key: key);
+class ResetPass extends StatelessWidget {
+  const ResetPass({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +27,7 @@ class CreatePass extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Create Password',
+                  'Reset Password',
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w700,
                     fontSize: 35,
@@ -39,7 +38,7 @@ class CreatePass extends StatelessWidget {
                   height: 11,
                 ),
                 Text(
-                  "Please create a strong password to protect your account.",
+                  "Verification successful! Please type something you'll remember.",
                   style: Interstyle.copyWith(fontSize: 15),
                   // textAlign: TextAlign.center,
                 ),
@@ -51,7 +50,7 @@ class CreatePass extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "Password",
+                      "New Password",
                       style: Interstyle.copyWith(
                         fontSize: 14,
                       ),
@@ -70,7 +69,7 @@ class CreatePass extends StatelessWidget {
                       height: 20,
                     ),
                     Text(
-                      "Confirm Password",
+                      "Confirm New Password",
                       style: Interstyle.copyWith(
                         fontSize: 14,
                       ),
@@ -90,6 +89,7 @@ class CreatePass extends StatelessWidget {
                 SizedBox(
                   height: 15,
                 ),
+                
                 SizedBox(
                   height: 40,
                 ),
@@ -98,29 +98,9 @@ class CreatePass extends StatelessWidget {
                     // margin: EdgeInsets.symmetric(horizontal: 10),
                     height: 45,
                     child: ElevatedButton(
-                      onPressed: () {
-                        AwesomeDialog(
-                          context: context,
-                          dialogType: DialogType.warning,
-                          animType: AnimType.topSlide,
-                          showCloseIcon: true,
-                          title: "Check Email",
-                          titleTextStyle: TextStyle(
-                              fontWeight: FontWeight.w900, fontSize: 25),
-                          desc:
-                              "We've sent a verification link to hello@gmail.com. Please check your inbox.",
-                          // btnCancelOnPress: () {},
-                          btnOkOnPress: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginPage()),
-                            );
-                          },
-                        ).show();
-                      },
+                      onPressed: () {},
                       child: Text(
-                        "Log In",
+                        "Reset Password",
                         style: Interstyle.copyWith(fontWeight: FontWeight.bold),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -170,11 +150,12 @@ class CreatePass extends StatelessWidget {
                         // Navigasi ke halaman pendaftaran
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => LoginPage()),
+                          MaterialPageRoute(
+                              builder: (context) => LoginPage()),
                         );
                       },
                       child: Text(
-                        "Log In",
+                        "Login",
                         style: Interrrstyle.copyWith(fontSize: 15),
                       ),
                     ),

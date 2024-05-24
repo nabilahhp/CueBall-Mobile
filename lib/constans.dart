@@ -48,3 +48,8 @@ const kPrimaryGradientColor = LinearGradient(
 );
 const kSecondaryColor = Color(0xFF979797);
 const kTextColor = Colors.black;
+
+//cart punya bila
+
+const kcontentColor = Color(0xffF5F5F5);
+const kprimaryColor =  Color(0xFFFBBC05);

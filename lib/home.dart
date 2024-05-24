@@ -30,7 +30,6 @@ class _homeState extends State<home>{
 
       var response = await http.get(Uri.parse('http://localhost:8000/project_api/coba_api.php'));
 
-      
       // Cek apakah permintaan berhasil (kode status 200)
       if (response.statusCode == 200) {
         // Ubah respons JSON menjadi List<Map<String, dynamic>>

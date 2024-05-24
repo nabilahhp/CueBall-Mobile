@@ -33,7 +33,7 @@ class ChangePass extends StatelessWidget {
                       'Change Password',
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w700,
-                        fontSize: 35,
+                        fontSize: 30,
                         color: Color(0xffffffff),
                       ),
                     ),

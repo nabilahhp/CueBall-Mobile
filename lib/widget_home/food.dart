@@ -15,7 +15,7 @@ class _foodState extends State<food> {
   late Future<List<Makanan>> futureMakanan;
 
   Future<List<Makanan>> fetchMakanan() async {
-    final response = await http.get(Uri.parse('http://localhost/api_projek/get_makanan.php'));
+var response = await http.get(Uri.parse('http://localhost:8000/projek_api/get_makanan.php'));
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);

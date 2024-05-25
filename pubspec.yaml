@@ -69,6 +69,7 @@ flutter:
     - lib/data/miegoreng.png
     - lib/data/page.png
     - assets/icons/
+    - lib/image/
     # The following line ensures that the Material Icons font is
     # included with your application, so that you can use the icons in
     # the material Icons class.

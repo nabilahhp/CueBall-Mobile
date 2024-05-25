@@ -15,7 +15,8 @@ class _foodState extends State<food> {
   late Future<List<Makanan>> futureMakanan;
 
   Future<List<Makanan>> fetchMakanan() async {
-var response = await http.get(Uri.parse('http://localhost:8000/projek_api/get_makanan.php'));
+    var response = await http
+        .get(Uri.parse('http://localhost:8000/projek_api/get_makanan.php'));
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
@@ -67,21 +68,21 @@ var response = await http.get(Uri.parse('http://localhost:8000/projek_api/get_ma
                       ),
                       child: Row(
                         children: [
-                          // Container(
-                          //   alignment: Alignment.center,
-                          //   child: Image.network(
-                          //     makanan.foto, // Ganti dengan URL gambar dari API Anda
-                          //     height: 120,
-                          //     width: 130,
-                          //     fit: BoxFit.cover,
-                          //   ),
-                          // ),
+                          Container(
+                            alignment: Alignment.center,
+                            child: Image.asset('lib/image/'+makanan.foto, // Ganti dengan URL gambar dari API Anda
+                              height: 120,
+                              width: 130,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                           Expanded(
                             child: Container(
                               padding: EdgeInsets.all(10),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   Text(
                                     makanan.nm,

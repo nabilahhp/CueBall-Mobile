@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mobile_bl/forgot.dart';
+import 'package:mobile_bl/password/forgot.dart';
 import 'package:mobile_bl/widget_home/navigationbar.dart';
 import 'constans.dart';
 import 'RegisterPage.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mobile_bl/RegisterPage.dart';
-import 'package:mobile_bl/changepass.dart';
+import 'package:mobile_bl/password/changepass.dart';
+import 'package:mobile_bl/profile/editprofile.dart';
 
 import 'components/profile_menu.dart';
 import 'components/profile_pic.dart';
@@ -34,7 +34,7 @@ class ProfileScreen extends StatelessWidget {
               press: () => {Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => RegisterPage()),
+                              builder: (context) => EditProfile()),
                         )},
             ),
             ProfileMenu(

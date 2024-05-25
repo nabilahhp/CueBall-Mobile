@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import '../constans.dart';
 import 'package:mobile_bl/main.dart';
-import 'package:mobile_bl/resetpass.dart';
-import 'constans.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
+import '../hidden_textfield.dart';
 
-class ForgotPass extends StatelessWidget {
-  const ForgotPass({Key? key});
+class CreatePass extends StatelessWidget {
+  const CreatePass({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class ForgotPass extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Forgot Password?',
+                  'Create Password',
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w700,
                     fontSize: 35,
@@ -38,7 +39,7 @@ class ForgotPass extends StatelessWidget {
                   height: 11,
                 ),
                 Text(
-                  "Don’t worry! Please enter the email associated with your account.",
+                  "Please create a strong password to protect your account.",
                   style: Interstyle.copyWith(fontSize: 15),
                   // textAlign: TextAlign.center,
                 ),
@@ -50,27 +51,46 @@ class ForgotPass extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "Email Address",
-                      style: Interstyle.copyWith(fontSize: 14),
+                      "Password",
+                      style: Interstyle.copyWith(
+                        fontSize: 14,
+                      ),
                     ),
                     SizedBox(
                       height: 5,
                     ),
                     Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: whiteColor,
-                      ),
-                      child: TextField(
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Enter Your Email Address",
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 18, vertical: 16)),
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: whiteColor,
+                        ),
+                        child: PasswordTextFieldCPass1()),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "Confirm Password",
+                      style: Interstyle.copyWith(
+                        fontSize: 14,
                       ),
                     ),
                     SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: whiteColor,
+                        ),
+                        child: PasswordTextFieldCPass2()),
+                  ],
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                SizedBox(
                   height: 40,
                 ),
                 Container(
@@ -79,14 +99,28 @@ class ForgotPass extends StatelessWidget {
                     height: 45,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ResetPass()),
-                          );
+                        AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.warning,
+                          animType: AnimType.topSlide,
+                          showCloseIcon: true,
+                          title: "Check Email",
+                          titleTextStyle: TextStyle(
+                              fontWeight: FontWeight.w900, fontSize: 25),
+                          desc:
+                              "We've sent a verification link to hello@gmail.com. Please check your inbox.",
+                          // btnCancelOnPress: () {},
+                          btnOkOnPress: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginPage()),
+                            );
+                          },
+                        ).show();
                       },
                       child: Text(
-                        "Send Link",
+                        "Log In",
                         style: Interstyle.copyWith(fontWeight: FontWeight.bold),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -128,7 +162,7 @@ class ForgotPass extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Remember password? ",
+                      "Already have an account? ",
                       style: Interstyle.copyWith(fontSize: 15),
                     ),
                     GestureDetector(
@@ -136,23 +170,20 @@ class ForgotPass extends StatelessWidget {
                         // Navigasi ke halaman pendaftaran
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginPage()),
+                          MaterialPageRoute(builder: (context) => LoginPage()),
                         );
                       },
                       child: Text(
-                        "Login",
+                        "Log In",
                         style: Interrrstyle.copyWith(fontSize: 15),
                       ),
                     ),
-                     ],
-                ),
+                  ],
+                )
               ],
             ),
-              ],
           ),
         ),
-      ),
       ),
     );
   }

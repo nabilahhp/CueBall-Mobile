@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_bl/main.dart';
-import 'package:mobile_bl/pass.dart';
+import 'package:mobile_bl/password/pass.dart';
 import 'constans.dart';
 import 'package:google_fonts/google_fonts.dart';
 

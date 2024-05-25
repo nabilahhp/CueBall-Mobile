@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_bl/main.dart';
-import 'constans.dart';
+import 'resetpass.dart';
+import '../constans.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'hidden_textfield.dart';
 
-class ResetPass extends StatelessWidget {
-  const ResetPass({Key? key}) : super(key: key);
+class ForgotPass extends StatelessWidget {
+  const ForgotPass({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class ResetPass extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Reset Password',
+                  'Forgot Password?',
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w700,
                     fontSize: 35,
@@ -38,7 +38,7 @@ class ResetPass extends StatelessWidget {
                   height: 11,
                 ),
                 Text(
-                  "Verification successful! Please type something you'll remember.",
+                  "Don’t worry! Please enter the email associated with your account.",
                   style: Interstyle.copyWith(fontSize: 15),
                   // textAlign: TextAlign.center,
                 ),
@@ -50,47 +50,27 @@ class ResetPass extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "New Password",
-                      style: Interstyle.copyWith(
-                        fontSize: 14,
-                      ),
+                      "Email Address",
+                      style: Interstyle.copyWith(fontSize: 14),
                     ),
                     SizedBox(
                       height: 5,
                     ),
                     Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: whiteColor,
-                        ),
-                        child: PasswordTextFieldCPass1()),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "Confirm New Password",
-                      style: Interstyle.copyWith(
-                        fontSize: 14,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: whiteColor,
+                      ),
+                      child: TextField(
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Enter Your Email Address",
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 18, vertical: 16)),
                       ),
                     ),
                     SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: whiteColor,
-                        ),
-                        child: PasswordTextFieldCPass2()),
-                  ],
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                
-                SizedBox(
                   height: 40,
                 ),
                 Container(
@@ -98,9 +78,15 @@ class ResetPass extends StatelessWidget {
                     // margin: EdgeInsets.symmetric(horizontal: 10),
                     height: 45,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ResetPass()),
+                          );
+                      },
                       child: Text(
-                        "Reset Password",
+                        "Send Link",
                         style: Interstyle.copyWith(fontWeight: FontWeight.bold),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -142,7 +128,7 @@ class ResetPass extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Already have an account? ",
+                      "Remember password? ",
                       style: Interstyle.copyWith(fontSize: 15),
                     ),
                     GestureDetector(
@@ -159,12 +145,14 @@ class ResetPass extends StatelessWidget {
                         style: Interrrstyle.copyWith(fontSize: 15),
                       ),
                     ),
-                  ],
-                )
+                     ],
+                ),
               ],
             ),
+              ],
           ),
         ),
+      ),
       ),
     );
   }

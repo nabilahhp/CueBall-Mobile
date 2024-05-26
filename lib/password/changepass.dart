@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_bl/profile/profile_screen.dart';
 import '../constans.dart'; // Pastikan nama file ini benar, jika salah ganti dengan nama yang sesuai
 import 'package:google_fonts/google_fonts.dart';
 import '../hidden_textfield.dart'; // Pastikan file ini ada dan berfungsi dengan baik
@@ -21,53 +22,37 @@ class ChangePass extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            Positioned(
-              left: size.width * 0.05, // Menggunakan persentase untuk posisi kiri
-              top: size.height * 0.05, // Menggunakan persentase untuk posisi atas
-              child: Container(
-                width: 50, // Ukuran lingkaran
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.white, // Warna latar belakang lingkaran
-                  shape: BoxShape.circle, // Bentuk lingkaran
-                ),
-                child: Center(
-                  child: IconButton(
-                    padding: EdgeInsets.all(0),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    icon: Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.yellow, // Warna ikon
-                    ),
-                  ),
-                ),
-              ),
-            ),
             Center(
-              child: SingleChildScrollView( // Gunakan SingleChildScrollView agar bisa di-scroll pada layar kecil
+              child: SingleChildScrollView(
+                // Gunakan SingleChildScrollView agar bisa di-scroll pada layar kecil
                 child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: size.width * 0.08), // Menggunakan persentase untuk margin horizontal
+                  margin: EdgeInsets.symmetric(
+                      horizontal: size.width *
+                          0.08), // Menggunakan persentase untuk margin horizontal
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Center( // Gunakan Center untuk menempatkan teks di tengah
+                      Center(
+                        // Gunakan Center untuk menempatkan teks di tengah
                         child: Text(
                           'Change Password',
                           style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w700,
-                            fontSize: size.width * 0.08, // Menggunakan persentase untuk ukuran font
+                            fontSize: size.width *
+                                0.08, // Menggunakan persentase untuk ukuran font
                             color: Color(0xffffffff),
                           ),
                         ),
                       ),
-                      SizedBox(height: size.height * 0.02), // Menggunakan persentase untuk ukuran tinggi
+                      SizedBox(
+                          height: size.height *
+                              0.02), // Menggunakan persentase untuk ukuran tinggi
                       Text(
                         "Current Password",
                         style: Interstyle.copyWith(
-                          fontSize: size.width * 0.04, // Menggunakan persentase untuk ukuran font
+                          fontSize: size.width *
+                              0.04, // Menggunakan persentase untuk ukuran font
                         ),
                       ),
                       SizedBox(height: size.height * 0.01),
@@ -82,7 +67,8 @@ class ChangePass extends StatelessWidget {
                       SizedBox(height: size.height * 0.02),
                       Text(
                         "Forgot Password?",
-                        style: Interrrstyle.copyWith(fontSize: size.width * 0.035),
+                        style:
+                            Interrrstyle.copyWith(fontSize: size.width * 0.035),
                       ),
                       SizedBox(height: size.height * 0.04),
                       Text(
@@ -119,7 +105,8 @@ class ChangePass extends StatelessWidget {
                       SizedBox(height: size.height * 0.04),
                       Container(
                         width: double.infinity,
-                        height: size.height * 0.06, // Menggunakan persentase untuk tinggi tombol
+                        height: size.height *
+                            0.06, // Menggunakan persentase untuk tinggi tombol
                         child: ElevatedButton(
                           onPressed: () {},
                           child: Text(
@@ -134,6 +121,29 @@ class ChangePass extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: size.height * 0.05),
+                      Container(
+                        width: double.infinity,
+                        height: size.height *
+                            0.06, // Menggunakan persentase untuk tinggi tombol
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ProfileScreen()),
+                            );
+                          },
+                          child: Text(
+                            "Cancel",
+                            style: Interrrstyle.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: buttonColorBlack,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

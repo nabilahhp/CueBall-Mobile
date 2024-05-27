@@ -12,7 +12,7 @@ class _ActivityPageState extends State<ActivityPage> {
     {
       'title': 'French Fries',
       'description': 'Lorem ipsum dolor sit amet.',
-      'imagePath': 'assets/images/french_fries.png',
+      'imagePath': 'lib/image/french_fries.png',
       'price': '00,0K',
       'buttonText': 'Cancel Order',
       'status': 'On Going',

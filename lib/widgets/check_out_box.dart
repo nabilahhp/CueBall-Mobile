@@ -1,12 +1,15 @@
+// check_out_box.dart
 import 'package:flutter/material.dart';
+import 'package:mobile_bl/models/cart_item.dart';
+import 'package:mobile_bl/screens/payment.dart';
 import 'package:provider/provider.dart';
 import '../provider/cart_provider.dart';
 import '../constans.dart';
 
 class CheckOutBox extends StatelessWidget {
-  const CheckOutBox({
-    super.key,
-  });
+  final List<CartItem> finalList;
+
+  const CheckOutBox({Key? key, required this.finalList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +17,9 @@ class CheckOutBox extends StatelessWidget {
     return Container(
       height: 300,
       width: double.infinity,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topRight: Radius.circular(30),
           topLeft: Radius.circular(30),
         ),
@@ -37,7 +40,7 @@ class CheckOutBox extends StatelessWidget {
               ),
               filled: true,
               fillColor: kcontentColor,
-              hintText: "Enter Discount Code",
+              hintText: "Masukkan Kode Diskon",
               hintStyle: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
@@ -46,7 +49,7 @@ class CheckOutBox extends StatelessWidget {
               suffixIcon: TextButton(
                 onPressed: () {},
                 child: const Text(
-                  "Apply",
+                  "Terapkan",
                   style: TextStyle(
                     color: kprimaryColor,
                     fontSize: 20,
@@ -74,7 +77,7 @@ class CheckOutBox extends StatelessWidget {
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
-              )
+              ),
             ],
           ),
           const SizedBox(height: 10),
@@ -96,22 +99,34 @@ class CheckOutBox extends StatelessWidget {
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
-              )
+              ),
             ],
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PaymentPage(items: finalList),
+                ),
+              );
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: kprimaryColor,
-              minimumSize: const Size(double.infinity, 55),
+              padding: const EdgeInsets.symmetric(vertical: 15),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
             ),
-            child: const Text(
-              "Check out",
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+            child: const Center(
+              child: Text(
+                'Checkout',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),

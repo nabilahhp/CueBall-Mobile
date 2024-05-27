@@ -76,10 +76,16 @@ class _FoodState extends State<food> {
                         children: [
                           Container(
                             alignment: Alignment.center,
+<<<<<<< Updated upstream
                             child: Image.asset(
                               'lib/image/' + makanan.foto,
                               height: 120,
                               width: 130,
+=======
+                            child: Image.asset('lib/image/'+makanan.foto, // Ganti dengan URL gambar dari API Anda
+                              height: 100,
+                              width: 110,
+>>>>>>> Stashed changes
                               fit: BoxFit.cover,
                             ),
                           ),

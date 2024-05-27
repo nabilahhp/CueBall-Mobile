@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+<<<<<<< Updated upstream
 import 'package:mobile_bl/home.dart';
 import 'package:mobile_bl/main.dart';
 import 'package:mobile_bl/password/changepass.dart';
 import 'package:mobile_bl/profile/editprofile.dart';
 import 'package:mobile_bl/widget_home/navigationbar.dart';
 import 'package:url_launcher/url_launcher.dart'; // Import paket url_launcher
+=======
+import 'package:mobile_bl/RegisterPage.dart';
+import 'package:mobile_bl/password/changepass.dart';
+>>>>>>> Stashed changes
 
 import 'components/profile_menu.dart';
 import 'components/profile_pic.dart';

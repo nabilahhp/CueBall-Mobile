@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_bl/widget_home/dialog_meja.dart';
+import 'package:mobile_bl/api/meja.dart'; // Import model Meja
 
-class DetailPage extends StatefulWidget {
-  const DetailPage({super.key});
+class DetailPage extends StatelessWidget {
+  final Meja meja;
 
-  @override
-  State<DetailPage> createState() => _DetailPageState();
-}
+  const DetailPage({Key? key, required this.meja}) : super(key: key);
 
-class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          // Gambar latar belakang
+          // Background Image
           Positioned(
             left: 0,
             top: 0,
@@ -30,9 +28,27 @@ class _DetailPageState extends State<DetailPage> {
               ),
             ),
           ),
-          // Tombol IconButton
-
-          // Kontainer merah
+          // Back Button
+          Positioned(
+            left: 30,
+            top: 40,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+              ),
+              child: IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.yellow,
+                ),
+              ),
+            ),
+          ),
+          // Red Container
           Positioned(
             top: 250,
             child: Container(
@@ -46,59 +62,54 @@ class _DetailPageState extends State<DetailPage> {
                 ),
               ),
               child: Container(
-                margin: EdgeInsets.symmetric(
-                  horizontal: 45,
-                ),
+                margin: EdgeInsets.symmetric(horizontal: 45),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: 210,
-                    ),
+                    SizedBox(height: 210),
                     Text(
-                      'Mini Tables Billiard',
+                      meja.nm,
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w600,
                         fontSize: 24,
                         color: Color(0xffFBBC05),
                       ),
                     ),
-                    SizedBox(
-                      height: 7,
-                    ),
+                    SizedBox(height: 7),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            Text(
-                              "Lorem ipsum dolor sit amet.",
-                              style: GoogleFonts.inter(
-                                  fontSize: 14, color: Color(0xff000000)),
-                            ),
-                          ],
+                        Text(
+                          meja.ket.isNotEmpty
+                              ? meja.ket
+                              : "Lorem ipsum dolor sit amet.",
+                          style: GoogleFonts.inter(
+                            fontSize: 14,
+                            color: Color(0xff000000),
+                          ),
                         ),
                         Row(
                           children: [
                             Text(
-                              "12.000",
+                              meja.harga,
                               style: GoogleFonts.inter(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xffFBBC05)),
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xffFBBC05),
+                              ),
                             ),
                             Text(
                               "/Hour",
                               style: GoogleFonts.inter(
-                                  fontSize: 14, color: Color(0xff000000)),
+                                fontSize: 14,
+                                color: Color(0xff000000),
+                              ),
                             ),
                           ],
-                        )
+                        ),
                       ],
                     ),
-                    SizedBox(
-                      height: 15,
-                    ),
+                    SizedBox(height: 15),
                     Text(
                       'Description',
                       style: GoogleFonts.poppins(
@@ -107,193 +118,130 @@ class _DetailPageState extends State<DetailPage> {
                         color: Color(0xffFBBC05),
                       ),
                     ),
-                    SizedBox(
-                      height: 7,
+                    SizedBox(height: 7),
+                    Text(
+                      meja.ket.isNotEmpty
+                          ? meja.ket
+                          : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse convallis, massa ultricies tempor condimentum, lacus elit accumsan lorem, vel sagittis magna sem eu lectus. Aliquam fringilla luctus turpis at vehicula. Sed quis auctor Show More...",
+                      style: GoogleFonts.inter(
+                        fontSize: 13,
+                        color: Color(0xff000000),
+                      ),
                     ),
-                    Column(
-                      children: [
-                        Text(
-                          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse convallis, massa ultricies tempor condimentum, lacus elit accumsan lorem, vel sagittis magna sem eu lectus. Aliquam fringilla luctus turpis at vehicula.",
-                          style: GoogleFonts.inter(
-                              fontSize: 13, color: Color(0xff000000)),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 23,
-                    ),
+                    SizedBox(height: 23),
                     Container(
-                        width: double.infinity,
-                        // margin: EdgeInsets.symmetric(horizontal: 10),
-                        height: 45,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return DialogMeja();
-                                });
-                          },
-                          child: Text(
-                            "Booking Now",
-                            style: GoogleFonts.inter(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                      width: double.infinity,
+                      height: 45,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return DialogMeja(meja: meja);
+                            },
+                          );
+                        },
+                        child: Text(
+                          "Booking Now",
+                          style: GoogleFonts.inter(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xffFBBC05)),
-                        )),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xffFBBC05),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
           ),
-
-          Stack(
-            children: [
-              Positioned(
-                top: 90,
-                left: 0,
-                right: 0,
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    width: 315,
-                    height: 300,
-                    decoration: BoxDecoration(
-                        // color: Colors.red,
-                        borderRadius: BorderRadius.circular(30),
-                        image: DecorationImage(
-                            image: AssetImage("lib/data/page.png"),
-                            fit: BoxFit.cover)),
-                  ),
-                ),
-              ),
-            ],
-          ),
+          // Image Container
           Positioned(
-            left: 30,
-            top: 40,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white, // Warna latar belakang lingkaran
-                shape: BoxShape.circle, // Bentuk lingkaran
-              ),
-              child: IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                icon: Icon(
-                  Icons.arrow_back_ios,
-                  color: Colors.yellow, // Warna ikon
+            top: 90,
+            left: 0,
+            right: 0,
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                width: 315,
+                height: 300,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  image: DecorationImage(
+                    image: AssetImage("lib/image/${meja.foto}"),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
           ),
 
+          // Additional Features like Free Wifi, Public Toilet, AC
           Positioned(
             top: 410,
-            left:
-                0, // Pastikan left diatur ke 0 agar posisi horizontal tetap di tengah
-            right:
-                0, // Pastikan right diatur ke 0 agar posisi horizontal tetap di tengah
+            left: 0,
+            right: 0,
             child: Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    width: 102,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Color(0xffEDEEEF),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.wifi,
-                          color: Color(0xff101010),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ), // Menggunakan SizedBox untuk memberi jarak
-                        Text(
-                          "Free Wifi",
-                          style: GoogleFonts.inter(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xff101010), // Tambahkan warna teks
-                          ),
-                        ),
-                      ],
-                    ),
+                  FeatureWidget(
+                    icon: Icons.wifi,
+                    label: "Free Wifi",
                   ),
-                  SizedBox(
-                    width: 5,
+                  SizedBox(width: 5),
+                  FeatureWidget(
+                    icon: Icons.bathroom_rounded,
+                    label: "Toilet",
                   ),
-                  Container(
-                    width: 110,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Color(0xffEDEEEF),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.bathroom_rounded,
-                          color: Color(0xff101010),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ), // Menggunakan SizedBox untuk memberi jarak
-                        Text(
-                          "Public Toilet",
-                          style: GoogleFonts.inter(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xff101010), // Tambahkan warna teks
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Container(
-                    width: 102,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Color(0xffEDEEEF),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.ac_unit,
-                          color: Color(0xff101010),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ), // Menggunakan SizedBox untuk memberi jarak
-                        Text(
-                          "AC",
-                          style: GoogleFonts.inter(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xff101010), // Tambahkan warna teks
-                          ),
-                        ),
-                      ],
-                    ),
+                  SizedBox(width: 5),
+                  FeatureWidget(
+                    icon: Icons.ac_unit,
+                    label: "AC",
                   ),
                 ],
               ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class FeatureWidget extends StatelessWidget {
+  final IconData icon;
+  final String label;
+
+  FeatureWidget({required this.icon, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 102,
+      height: 40,
+      decoration: BoxDecoration(
+        color: Color(0xffEDEEEF),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            color: Color(0xff101010),
+          ),
+          SizedBox(width: 5),
+          Text(
+            label,
+            style: GoogleFonts.inter(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Color(0xff101010),
             ),
           ),
         ],

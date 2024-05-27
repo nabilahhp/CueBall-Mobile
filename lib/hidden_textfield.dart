@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class PasswordTextFieldLogin extends StatefulWidget {
+  final TextEditingController controller;
+
+  PasswordTextFieldLogin({Key? key, required this.controller}) : super(key: key);
+
   @override
   _PasswordTextFieldStateLogin createState() => _PasswordTextFieldStateLogin();
 }
@@ -25,6 +29,7 @@ class _PasswordTextFieldStateLogin extends State<PasswordTextFieldLogin> {
         child: Stack(
           children: [
             TextField(
+              controller: widget.controller, // Gunakan controller dari widget
               obscureText: !isLogoPressed,
               decoration: InputDecoration(
                 hintText: "Password",
@@ -47,6 +52,7 @@ class _PasswordTextFieldStateLogin extends State<PasswordTextFieldLogin> {
     );
   }
 }
+
 
 //Textfield create pass 1
 class PasswordTextFieldCPass1 extends StatefulWidget {

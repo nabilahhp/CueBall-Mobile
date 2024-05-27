@@ -6,11 +6,12 @@ import 'constans.dart';
 import 'RegisterPage.dart';
 import 'hidden_textfield.dart';
 import 'package:provider/provider.dart';
-import 'package:mobile_bl/widget_home/food.dart';
-import 'screens/cart_screen.dart';
+import 'package:http/http.dart' as http;
 import 'provider/cart_provider.dart';
+import 'dart:convert';
 
-final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+    GlobalKey<ScaffoldMessengerState>();
 
 void main() {
   runApp(
@@ -24,19 +25,67 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       scaffoldMessengerKey: scaffoldMessengerKey,
-      home: const LoginPage(),
+      home: LoginPage(), // Set LoginPage sebagai halaman awal
     );
   }
 }
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key});
+  final TextEditingController emailController = TextEditingController();
+final TextEditingController passwordController = TextEditingController();
+
+Future<void> login(BuildContext context) async {
+    final String email = emailController.text;
+    final String password = passwordController.text;
+
+    // Validasi input
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Email and password are required')),
+      );
+      print('Email and password are required');
+      return;
+    }
+
+    final response = await http.post(
+      Uri.parse('http://localhost:8000/projek_api/get_user.php'),
+      body: {'email': email, 'password': password},
+    );
+
+    print('Response Status Code: ${response.statusCode}');
+    print('Response Body: ${response.body}');
+
+    final responseData = json.decode(response.body);
+
+    if (responseData['success'] != null && responseData['success'] == 'Login successful') {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => NavigationMenu()),
+      );
+    } else if (responseData['error'] != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(responseData['error'])),
+      );
+      print(responseData['error']);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to login. Please try again later.')),
+      );
+      print('Failed to login. Please try again later.');
+    }
+    print('Email: $email');
+print('Password: $password');
+
+}
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +99,7 @@ class LoginPage extends StatelessWidget {
         ),
         child: Center(
           child: Container(
-            margin: EdgeInsets.symmetric(
-              horizontal: 32,
-            ),
+            margin: EdgeInsets.symmetric(horizontal: 32),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,11 +134,13 @@ class LoginPage extends StatelessWidget {
                         color: whiteColor,
                       ),
                       child: TextField(
+                        controller: emailController,
                         decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "ERICKO@gmail.com",
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 18, vertical: 16)),
+                          border: InputBorder.none,
+                          hintText: "ERICKO@gmail.com",
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 18, vertical: 16),
+                        ),
                       ),
                     ),
                     SizedBox(height: 20),
@@ -106,7 +155,7 @@ class LoginPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         color: whiteColor,
                       ),
-                      child: PasswordTextFieldLogin(),
+                      child: PasswordTextFieldLogin(controller: passwordController,)
                     ),
                   ],
                 ),
@@ -120,8 +169,9 @@ class LoginPage extends StatelessWidget {
                           width: 20,
                           height: 20,
                           decoration: BoxDecoration(
-                              color: buttonColor,
-                              borderRadius: BorderRadius.circular(15)),
+                            color: buttonColor,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
                         ),
                         SizedBox(width: 15),
                         Text(
@@ -146,23 +196,22 @@ class LoginPage extends StatelessWidget {
                 ),
                 SizedBox(height: 40),
                 Container(
-                    width: double.infinity,
-                    height: 45,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NavigationMenu()),
-                        );
-                      },
-                      child: Text(
-                        "Log In",
-                        style: Interstyle.copyWith(fontWeight: FontWeight.bold),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: buttonColor),
-                    )),
+                  width: double.infinity,
+                  height: 45,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      login(
+                          context); // Panggil fungsi login saat tombol ditekan
+                    },
+                    child: Text(
+                      "Log In",
+                      style: Interstyle.copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: buttonColor,
+                    ),
+                  ),
+                ),
                 SizedBox(height: 45),
                 Row(
                   children: <Widget>[
@@ -176,8 +225,9 @@ class LoginPage extends StatelessWidget {
                       child: Text(
                         "Or with",
                         style: TextStyle(
-                            color: Color(0xfffffffff),
-                            fontSize: 13),
+                          color: Color(0xfffffffff),
+                          fontSize: 13,
+                        ),
                       ),
                     ),
                     Expanded(

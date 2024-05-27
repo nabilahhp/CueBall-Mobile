@@ -43,14 +43,12 @@ if ($idMeja !== null && $idMeja !== '') {
             $jamSewa[] = $row;
         }
     }
-
     // Mengirimkan data sebagai JSON
     echo json_encode($jamSewa);
 } else {
     // Jika $idMeja kosong, kirimkan pesan error
     echo json_encode(array("message" => "ID Meja tidak valid"));
 }
-
 // Menutup koneksi database
 $conn->close();
 ?>

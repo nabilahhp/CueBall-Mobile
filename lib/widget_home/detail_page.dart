@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mobile_bl/widget_home/dialog_meja.dart';
+import 'package:mobile_bl/widget_home/sewa_meja.dart';
 import 'package:mobile_bl/api/meja.dart'; // Import model Meja
 
 class DetailPage extends StatelessWidget {
@@ -137,7 +137,7 @@ class DetailPage extends StatelessWidget {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return DialogMeja(meja: meja);
+                              return DialogMeja1(meja: meja);
                             },
                           );
                         },

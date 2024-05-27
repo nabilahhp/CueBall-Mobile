@@ -5,7 +5,7 @@ import 'package:mobile_bl/widget_home/navigationbar.dart';
 import '../constans.dart'; // Pastikan nama file ini benar, jika salah ganti dengan nama yang sesuai
 import 'package:google_fonts/google_fonts.dart';
 import '../hidden_textfield.dart'; // Pastikan file ini ada dan berfungsi dengan baik
-
+import 'forgot.dart';
 
 class ChangePass extends StatelessWidget {
   const ChangePass({Key? key}) : super(key: key);
@@ -68,10 +68,18 @@ class ChangePass extends StatelessWidget {
                         child: PasswordTextFieldChPass(),
                       ),
                       SizedBox(height: size.height * 0.02),
-                      Text(
-                        "Forgot Password?",
-                        style:
-                            Interrrstyle.copyWith(fontSize: size.width * 0.035),
+                      TextButton(
+                        onPressed: () {
+                          // Navigasi ke halaman ForgotPass
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ForgotPass()),
+                          );
+                        },
+                        child: Text(
+                          "Forgot Password?",
+                          style: Interrrstyle.copyWith(fontSize: size.width * 0.035),
+                        ),
                       ),
                       SizedBox(height: size.height * 0.04),
                       Text(

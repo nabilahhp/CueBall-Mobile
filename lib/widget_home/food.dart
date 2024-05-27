@@ -38,7 +38,7 @@ class _FoodState extends State<food> {
 
   @override
   Widget build(BuildContext context) {
-    final cartProvider = CartProvider.of(context);
+    final cartProvider = Provider.of<CartProvider>(context);
 
     return FutureBuilder<List<Makanan>>(
       future: futureMakanan,
@@ -127,6 +127,14 @@ class _FoodState extends State<food> {
                                             image: 'lib/image/' + makanan.foto,
                                           );
                                           cartProvider.addToCart(cartItem);
+
+                                          // Tampilkan SnackBar setelah item ditambahkan ke keranjang
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            SnackBar(
+                                              content: Text('Berhasil ditambahkan ke keranjang!'),
+                                              duration: Duration(seconds: 2),
+                                            ),
+                                          );
                                         },
                                         icon: Icon(Icons.shopping_cart),
                                       ),

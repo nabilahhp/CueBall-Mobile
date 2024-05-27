@@ -1,10 +1,12 @@
-// widgets/check_out_box.dart
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../provider/cart_provider.dart';
 import '../constans.dart';
 
 class CheckOutBox extends StatelessWidget {
-  const CheckOutBox({super.key});
+  const CheckOutBox({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +69,7 @@ class CheckOutBox extends StatelessWidget {
                 ),
               ),
               Text(
-                "\$${provider.totalPrice()}",
+                "Rp ${provider.totalPrice()}",
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -89,7 +91,7 @@ class CheckOutBox extends StatelessWidget {
                 ),
               ),
               Text(
-                "\$${provider.totalPrice()}",
+                "Rp ${provider.totalPrice()}",
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,

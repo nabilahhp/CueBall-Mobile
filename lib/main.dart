@@ -8,24 +8,29 @@ import 'hidden_textfield.dart';
 import 'package:provider/provider.dart';
 import 'package:mobile_bl/widget_home/food.dart';
 import 'screens/cart_screen.dart';
-import 'package:mobile_bl/provider/cart_provider.dart';
+import 'provider/cart_provider.dart';
+
+final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => CartProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CartProvider()),
+      ],
       child: const MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: LoginPage(),
+      scaffoldMessengerKey: scaffoldMessengerKey,
+      home: const LoginPage(),
     );
   }
 }
@@ -60,17 +65,12 @@ class LoginPage extends StatelessWidget {
                     color: Color(0xffffffff),
                   ),
                 ),
-                SizedBox(
-                  height: 11,
-                ),
+                SizedBox(height: 11),
                 Text(
                   "Welcome back! Please log in to continue your journey with us.",
                   style: Interstyle.copyWith(fontSize: 15),
-                  // textAlign: TextAlign.center,
                 ),
-                SizedBox(
-                  height: 34,
-                ),
+                SizedBox(height: 34),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -79,9 +79,7 @@ class LoginPage extends StatelessWidget {
                       "Email",
                       style: Interstyle.copyWith(fontSize: 14),
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
+                    SizedBox(height: 5),
                     Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
@@ -96,30 +94,23 @@ class LoginPage extends StatelessWidget {
                                 horizontal: 18, vertical: 16)),
                       ),
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
+                    SizedBox(height: 20),
                     Text(
                       "password",
-                      style: Interstyle.copyWith(
-                        fontSize: 14,
-                      ),
+                      style: Interstyle.copyWith(fontSize: 14),
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
+                    SizedBox(height: 5),
                     Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: whiteColor,
-                        ),
-                        child: PasswordTextFieldLogin()),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: whiteColor,
+                      ),
+                      child: PasswordTextFieldLogin(),
+                    ),
                   ],
                 ),
-                SizedBox(
-                  height: 15,
-                ),
+                SizedBox(height: 15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -132,9 +123,7 @@ class LoginPage extends StatelessWidget {
                               color: buttonColor,
                               borderRadius: BorderRadius.circular(15)),
                         ),
-                        SizedBox(
-                          width: 15,
-                        ),
+                        SizedBox(width: 15),
                         Text(
                           "Remember Me",
                           style: Interstyle.copyWith(fontSize: 13),
@@ -143,7 +132,6 @@ class LoginPage extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // Navigasi ke halaman pendaftaran
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => ForgotPass()),
@@ -156,12 +144,9 @@ class LoginPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 40,
-                ),
+                SizedBox(height: 40),
                 Container(
                     width: double.infinity,
-                    // margin: EdgeInsets.symmetric(horizontal: 10),
                     height: 45,
                     child: ElevatedButton(
                       onPressed: () {
@@ -178,15 +163,12 @@ class LoginPage extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                           backgroundColor: buttonColor),
                     )),
-                SizedBox(
-                  height: 45,
-                ),
+                SizedBox(height: 45),
                 Row(
                   children: <Widget>[
                     Expanded(
                       child: Divider(
-                        color:
-                            Colors.white, // Atur warna garis sesuai kebutuhan
+                        color: Colors.white,
                       ),
                     ),
                     Padding(
@@ -195,21 +177,17 @@ class LoginPage extends StatelessWidget {
                         "Or with",
                         style: TextStyle(
                             color: Color(0xfffffffff),
-                            fontSize:
-                                13), // Sesuaikan dengan gaya teks yang diinginkan
+                            fontSize: 13),
                       ),
                     ),
                     Expanded(
                       child: Divider(
-                        color:
-                            Colors.white, // Atur warna garis sesuai kebutuhan
+                        color: Colors.white,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 45,
-                ),
+                SizedBox(height: 45),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -219,7 +197,6 @@ class LoginPage extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // Navigasi ke halaman pendaftaran
                         Navigator.push(
                           context,
                           MaterialPageRoute(

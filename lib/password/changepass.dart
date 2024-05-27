@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_bl/main.dart';
 import 'package:mobile_bl/profile/profile_screen.dart';
+import 'package:mobile_bl/widget_home/navigationbar.dart';
 import '../constans.dart'; // Pastikan nama file ini benar, jika salah ganti dengan nama yang sesuai
 import 'package:google_fonts/google_fonts.dart';
 import '../hidden_textfield.dart'; // Pastikan file ini ada dan berfungsi dengan baik
+
 
 class ChangePass extends StatelessWidget {
   const ChangePass({Key? key}) : super(key: key);
@@ -103,46 +106,50 @@ class ChangePass extends StatelessWidget {
                         child: PasswordTextFieldCPass2(),
                       ),
                       SizedBox(height: size.height * 0.04),
-                      Container(
-                        width: double.infinity,
-                        height: size.height *
-                            0.06, // Menggunakan persentase untuk tinggi tombol
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: Text(
-                            "Save",
-                            style: Interrrstyle.copyWith(
-                              fontWeight: FontWeight.bold,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: size.height *
+                                  0.06, // Menggunakan persentase untuk tinggi tombol
+                              margin: EdgeInsets.only(right: 10),
+                              child: ElevatedButton(
+                                onPressed: () {},
+                                child: Text(
+                                  "Save",
+                                  style: Interrrstyle.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: buttonColorBlack,
+                                ),
+                              ),
                             ),
                           ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: buttonColorBlack,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: size.height * 0.05),
-                      Container(
-                        width: double.infinity,
-                        height: size.height *
-                            0.06, // Menggunakan persentase untuk tinggi tombol
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ProfileScreen()),
-                            );
-                          },
-                          child: Text(
-                            "Cancel",
-                            style: Interrrstyle.copyWith(
-                              fontWeight: FontWeight.bold,
+                          Expanded(
+                            child: Container(
+                              height: size.height *
+                                  0.06, // Menggunakan persentase untuk tinggi tombol
+                              margin: EdgeInsets.only(left: 10),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  // Kembali ke halaman sebelumnya (ProfileScreen)
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  "Cancel",
+                                  style: Interrrstyle.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: buttonColorBlack,
+                                ),
+                              ),
                             ),
                           ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: buttonColorBlack,
-                          ),
-                        ),
+                        ],
                       ),
                     ],
                   ),

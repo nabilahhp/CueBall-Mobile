@@ -68,47 +68,49 @@ class EditProfile extends StatelessWidget {
                           hintText: 'Your Address',
                         ),
                         SizedBox(height: 20),
-                        Container(
-                          width: double.infinity,
-                          height: 45,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => NavigationMenu(),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                height: 45,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    // Handle Save button press
+                                  },
+                                  child: Text(
+                                    "Save",
+                                    style: Interrrstyle.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: buttonColorBlack,
+                                  ),
                                 ),
-                              );
-                            },
-                            child: Text(
-                              "Save",
-                              style: Interrrstyle.copyWith(
-                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: buttonColorBlack,
+                            SizedBox(width: 20),
+                            Expanded(
+                              child: Container(
+                                height: 45,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    // Navigate back to ProfileScreen
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    "Cancel",
+                                    style: Interrrstyle.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: buttonColorBlack,
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ProfileScreen()),
-                            );
-                          },
-                          child: Text(
-                            "Cancel",
-                            style: Interrrstyle.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: buttonColorBlack,
-                          ),
+                          ],
                         ),
                       ],
                     ),

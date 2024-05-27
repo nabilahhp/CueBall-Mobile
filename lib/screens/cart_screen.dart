@@ -6,7 +6,7 @@ import '../widgets/check_out_box.dart';
 import '../constans.dart';
 
 class CartScreen extends StatefulWidget {
-  const CartScreen({super.key});
+  const CartScreen({Key? key}) : super(key: key);
 
   @override
   State<CartScreen> createState() => _CartScreenState();
@@ -184,7 +184,7 @@ class _CartScreenState extends State<CartScreen> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: CheckOutBox(),
+              child: CheckOutBox(finalList: finalList),
             ),
           ],
         ),

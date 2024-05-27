@@ -8,12 +8,7 @@ import 'hidden_textfield.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'provider/cart_provider.dart';
-<<<<<<< Updated upstream
 import 'dart:convert';
-=======
-import 'screens/activity_screen.dart';
-import 'screens/payment.dart';
->>>>>>> Stashed changes
 
 final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
     GlobalKey<ScaffoldMessengerState>();
@@ -36,14 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       scaffoldMessengerKey: scaffoldMessengerKey,
-<<<<<<< Updated upstream
       home: LoginPage(), // Set LoginPage sebagai halaman awal
-=======
-      home: const LoginPage(),
-      routes: {
-        '/payment': (context) => PaymentPage(items:List.from(elements))(),
-      },
->>>>>>> Stashed changes
     );
   }
 }
@@ -118,7 +106,7 @@ print('Password: $password');
               children: [
                 Text(
                   'Welcome Back',
-                  style: GoogleFonts.poppins( // Fixed here
+                  style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w700,
                     fontSize: 35,
                     color: Color(0xffffffff),
@@ -127,9 +115,7 @@ print('Password: $password');
                 SizedBox(height: 11),
                 Text(
                   "Welcome back! Please log in to continue your journey with us.",
-                  style: GoogleFonts.poppins( // Fixed here
-                    fontSize: 15,
-                  ),
+                  style: Interstyle.copyWith(fontSize: 15),
                 ),
                 SizedBox(height: 34),
                 Column(
@@ -138,9 +124,7 @@ print('Password: $password');
                   children: [
                     Text(
                       "Email",
-                      style: GoogleFonts.poppins( // Fixed here
-                        fontSize: 14,
-                      ),
+                      style: Interstyle.copyWith(fontSize: 14),
                     ),
                     SizedBox(height: 5),
                     Container(
@@ -155,22 +139,14 @@ print('Password: $password');
                           border: InputBorder.none,
                           hintText: "ERICKO@gmail.com",
                           contentPadding: EdgeInsets.symmetric(
-<<<<<<< Updated upstream
                               horizontal: 18, vertical: 16),
-=======
-                            horizontal: 18,
-                            vertical: 16,
-                          ),
->>>>>>> Stashed changes
                         ),
                       ),
                     ),
                     SizedBox(height: 20),
                     Text(
                       "password",
-                      style: GoogleFonts.poppins( // Fixed here
-                        fontSize: 14,
-                      ),
+                      style: Interstyle.copyWith(fontSize: 14),
                     ),
                     SizedBox(height: 5),
                     Container(
@@ -200,10 +176,8 @@ print('Password: $password');
                         SizedBox(width: 15),
                         Text(
                           "Remember Me",
-                          style: GoogleFonts.poppins( // Fixed here
-                            fontSize: 13,
-                          ),
-                        ),
+                          style: Interstyle.copyWith(fontSize: 13),
+                        )
                       ],
                     ),
                     GestureDetector(
@@ -215,9 +189,7 @@ print('Password: $password');
                       },
                       child: Text(
                         "Forgot Password?",
-                        style: GoogleFonts.poppins( // Fixed here
-                          fontSize: 13,
-                        ),
+                        style: Interstyle.copyWith(fontSize: 13),
                       ),
                     ),
                   ],
@@ -228,25 +200,12 @@ print('Password: $password');
                   height: 45,
                   child: ElevatedButton(
                     onPressed: () {
-<<<<<<< Updated upstream
                       login(
                           context); // Panggil fungsi login saat tombol ditekan
                     },
                     child: Text(
                       "Log In",
                       style: Interstyle.copyWith(fontWeight: FontWeight.bold),
-=======
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => NavigationMenu()),
-                      );
-                    },
-                    child: Text(
-                      "Log In",
-                      style: GoogleFonts.poppins( // Fixed here
-                        fontWeight: FontWeight.bold,
-                      ),
->>>>>>> Stashed changes
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: buttonColor,
@@ -257,24 +216,24 @@ print('Password: $password');
                 Row(
                   children: <Widget>[
                     Expanded(
-                      child: Divider(color: Colors.white),
+                      child: Divider(
+                        color: Colors.white,
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 7.0),
                       child: Text(
                         "Or with",
-<<<<<<< Updated upstream
                         style: TextStyle(
-=======
-                        style: GoogleFonts.poppins( // Fixed here
->>>>>>> Stashed changes
                           color: Color(0xfffffffff),
                           fontSize: 13,
                         ),
                       ),
                     ),
                     Expanded(
-                      child: Divider(color: Colors.white),
+                      child: Divider(
+                        color: Colors.white,
+                      ),
                     ),
                   ],
                 ),
@@ -284,26 +243,23 @@ print('Password: $password');
                   children: [
                     Text(
                       "Don’t have an account? ",
-                      style: GoogleFonts.poppins( // Fixed here
-                        fontSize: 15,
-                      ),
+                      style: Interstyle.copyWith(fontSize: 15),
                     ),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => RegisterPage()),
+                          MaterialPageRoute(
+                              builder: (context) => RegisterPage()),
                         );
                       },
                       child: Text(
                         "Sign Up",
-                        style: GoogleFonts.poppins( // Fixed here
-                          fontSize: 15,
-                        ),
+                        style: Interrrstyle.copyWith(fontSize: 15),
                       ),
                     ),
                   ],
-                ),
+                )
               ],
             ),
           ),

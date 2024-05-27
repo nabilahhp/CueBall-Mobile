@@ -1,5 +1,5 @@
 class Makanan {
-  final int idmakanan;
+  final String idmakanan;
   final String nm;
   final int harga;
   final String foto;
@@ -15,7 +15,7 @@ class Makanan {
 
   factory Makanan.fromJson(Map<String, dynamic> json) {
     return Makanan(
-      idmakanan: int.parse(json['idmakanan']),
+      idmakanan: (json['idmakanan']),
       nm: json['nm'],
       harga: int.parse(json['harga']),
       foto: json['foto'],

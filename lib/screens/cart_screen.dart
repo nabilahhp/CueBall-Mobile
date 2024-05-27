@@ -1,7 +1,9 @@
-import 'package:mobile_bl/provider/cart_provider.dart';
+// screens/cart_screen.dart
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../provider/cart_provider.dart';
+import '../widgets/check_out_box.dart';
 import '../constans.dart';
-import 'check_out.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -21,8 +23,8 @@ class _CartScreenState extends State<CartScreen> {
         onTap: () {
           setState(() {
             icon == Icons.add
-                ? provider.incrementQtn(index)
-                : provider.decrementQtn(index);
+                ? provider.incrementQty(index)
+                : provider.decrementQty(index);
           });
         },
         child: Icon(
@@ -33,10 +35,8 @@ class _CartScreenState extends State<CartScreen> {
     }
 
     return Scaffold(
-      // for total and check out
       backgroundColor: kcontentColor,
-      bottomSheet:  CheckOutBox(),
-
+      bottomSheet: CheckOutBox(),
       body: SafeArea(
         child: Column(
           children: [
@@ -61,7 +61,7 @@ class _CartScreenState extends State<CartScreen> {
                 shrinkWrap: true,
                 itemCount: finalList.length,
                 itemBuilder: (context, index) {
-                  final cartItems = finalList[index];
+                  final cartItem = finalList[index];
                   return Stack(
                     children: [
                       Padding(
@@ -84,7 +84,7 @@ class _CartScreenState extends State<CartScreen> {
                                 ),
                                 padding: const EdgeInsets.all(10),
                                 child: Image.asset(
-                                  cartItems.image,
+                                  cartItem.image,
                                 ),
                               ),
                               const SizedBox(width: 10),
@@ -92,7 +92,7 @@ class _CartScreenState extends State<CartScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    cartItems.title,
+                                    cartItem.name,
                                     style: const TextStyle(
                                       fontSize: 16,
                                       color: Colors.black,
@@ -101,8 +101,8 @@ class _CartScreenState extends State<CartScreen> {
                                   ),
                                   const SizedBox(height: 5),
                                   Text(
-                                    cartItems.category,
-                                    style:const TextStyle(
+                                    cartItem.description,
+                                    style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.grey,
@@ -110,7 +110,7 @@ class _CartScreenState extends State<CartScreen> {
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
-                                    "\$${cartItems.price}",
+                                    "Rp ${cartItem.price}",
                                     style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
@@ -130,8 +130,7 @@ class _CartScreenState extends State<CartScreen> {
                           children: [
                             IconButton(
                               onPressed: () {
-                                finalList[index].quantity = 1;
-                                finalList.removeAt(index);
+                                provider.removeItem(index);
                                 setState(() {});
                               },
                               icon: const Icon(
@@ -157,7 +156,7 @@ class _CartScreenState extends State<CartScreen> {
                                   productQuantity(Icons.add, index),
                                   const SizedBox(width: 10),
                                   Text(
-                                    cartItems.quantity.toString(),
+                                    cartItem.quantity.toString(),
                                     style: const TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
@@ -171,7 +170,7 @@ class _CartScreenState extends State<CartScreen> {
                             ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   );
                 },

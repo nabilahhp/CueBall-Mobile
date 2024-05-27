@@ -1,22 +1,26 @@
+// food.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_bl/api/makanan.dart';
+import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../provider/cart_provider.dart';
+import '../models/cart_item.dart';
+import 'package:mobile_bl/screens/cart_screen.dart'; // Import CartScreen
 
 class food extends StatefulWidget {
   const food({Key? key}) : super(key: key);
 
   @override
-  State<food> createState() => _foodState();
+  State<food> createState() => _FoodState();
 }
 
-class _foodState extends State<food> {
+class _FoodState extends State<food> {
   late Future<List<Makanan>> futureMakanan;
 
   Future<List<Makanan>> fetchMakanan() async {
-    var response = await http
-        .get(Uri.parse('http://localhost:8000/projek_api/get_makanan.php'));
+    var response = await http.get(Uri.parse('http://localhost:8000/projek_api/get_makanan.php'));
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
@@ -34,6 +38,8 @@ class _foodState extends State<food> {
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = CartProvider.of(context);
+
     return FutureBuilder<List<Makanan>>(
       future: futureMakanan,
       builder: (context, snapshot) {
@@ -70,7 +76,8 @@ class _foodState extends State<food> {
                         children: [
                           Container(
                             alignment: Alignment.center,
-                            child: Image.asset('lib/image/'+makanan.foto, // Ganti dengan URL gambar dari API Anda
+                            child: Image.asset(
+                              'lib/image/' + makanan.foto,
                               height: 120,
                               width: 130,
                               fit: BoxFit.cover,
@@ -81,8 +88,7 @@ class _foodState extends State<food> {
                               padding: EdgeInsets.all(10),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   Text(
                                     makanan.nm,
@@ -100,13 +106,31 @@ class _foodState extends State<food> {
                                       color: Color(0xff121212),
                                     ),
                                   ),
-                                  Text(
-                                    "Rp ${makanan.harga}",
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.red,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Rp ${makanan.harga}",
+                                        style: GoogleFonts.poppins(
+                                          color: Colors.red,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          final cartItem = CartItem(
+                                            id: makanan.idmakanan,
+                                            name: makanan.nm,
+                                            description: makanan.deskripsi,
+                                            price: makanan.harga,
+                                            image: 'lib/image/' + makanan.foto,
+                                          );
+                                          cartProvider.addToCart(cartItem);
+                                        },
+                                        icon: Icon(Icons.shopping_cart),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),

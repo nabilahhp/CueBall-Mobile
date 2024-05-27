@@ -1,11 +1,10 @@
+// widgets/check_out_box.dart
 import 'package:flutter/material.dart';
-import '../../Provider/cart_provider.dart';
+import '../provider/cart_provider.dart';
 import '../constans.dart';
 
 class CheckOutBox extends StatelessWidget {
-  const CheckOutBox({
-    super.key,
-  });
+  const CheckOutBox({super.key});
 
   @override
   Widget build(BuildContext context) {

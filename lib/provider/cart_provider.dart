@@ -1,49 +1,49 @@
+// provider/cart_provider.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/product_model.dart'; 
+import '../models/cart_item.dart';  // Import model CartItem
 
 class CartProvider extends ChangeNotifier {
-  final List<Product> _cart = [];
-  List<Product> get cart => _cart;
-  void toggleFavorite(Product product) {
-    if (_cart.contains(product)) {
-      for (Product element in _cart) {
-        element.quantity++;
-      }
+  final List<CartItem> _cart = [];
+
+  List<CartItem> get cart => _cart;
+
+  void addToCart(CartItem product) {
+    final index = _cart.indexWhere((item) => item.id == product.id);
+    if (index >= 0) {
+      _cart[index].quantity++;
     } else {
       _cart.add(product);
     }
     notifyListeners();
   }
 
-  incrementQtn(int index) {
+  void incrementQty(int index) {
     _cart[index].quantity++;
     notifyListeners();
   }
 
-  decrementQtn(int index) {
-    if (_cart[index].quantity <= 1) {
-      return;
+  void decrementQty(int index) {
+    if (_cart[index].quantity > 1) {
+      _cart[index].quantity--;
     }
-    _cart[index].quantity--;
     notifyListeners();
   }
 
-  totalPrice() {
-    double total1 = 0.0;
-    for (Product element in _cart) {
-      total1 += element.price * element.quantity;
+  double totalPrice() {
+    double total = 0.0;
+    for (var item in _cart) {
+      total += item.price * item.quantity;
     }
-    return total1;
+    return total;
   }
 
-  static CartProvider of(
-    BuildContext context, {
-    bool listen = true,
-  }) {
-    return Provider.of<CartProvider>(
-      context,
-      listen: listen,
-    );
+  void removeItem(int index) {
+    _cart.removeAt(index);
+    notifyListeners();
+  }
+
+  static CartProvider of(BuildContext context, {bool listen = true}) {
+    return Provider.of<CartProvider>(context, listen: listen);
   }
 }

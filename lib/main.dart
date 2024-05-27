@@ -5,13 +5,22 @@ import 'package:mobile_bl/widget_home/navigationbar.dart';
 import 'constans.dart';
 import 'RegisterPage.dart';
 import 'hidden_textfield.dart';
+import 'package:provider/provider.dart';
+import 'package:mobile_bl/widget_home/food.dart';
+import 'screens/cart_screen.dart';
+import 'package:mobile_bl/provider/cart_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => CartProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key});
 
   @override
   Widget build(BuildContext context) {

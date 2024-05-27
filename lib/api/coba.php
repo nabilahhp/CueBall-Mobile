@@ -1,7 +1,7 @@
 <?php
-header("Access-Control-Allow-Origin: *"); // Memperbolehkan akses dari semua domain
-header("Content-Type: application/json");
-
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Content-Type");
+header("Content-Type: application/json; charset=UTF-8");
 // Mengatur koneksi ke database
 $servername = "localhost";
 $username = "root";

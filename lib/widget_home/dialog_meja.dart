@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_bl/api/meja.dart'; // Import model Meja
+import 'package:mobile_bl/api/jam_sewa.dart'; // Import model JamSewa
+import 'package:mobile_bl/api/api_service.dart'; // Import ApiService
 
 class DialogMeja extends StatefulWidget {
-  const DialogMeja({Key? key}) : super(key: key);
+  final Meja meja;
+
+  const DialogMeja({Key? key, required this.meja}) : super(key: key);
 
   @override
   State<DialogMeja> createState() => _DialogMejaState();
@@ -10,216 +15,222 @@ class DialogMeja extends StatefulWidget {
 
 class _DialogMejaState extends State<DialogMeja> {
   TextEditingController _dateController = TextEditingController();
+  late DateTime _selectedDate;
+  late List<JamSewa> _bookedTimes;
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+@override
+void initState() {
+  super.initState();
+  _selectedDate = DateTime.now();
+  _bookedTimes = [];
+  _fetchBookedTimes();
+}
+
+void _fetchBookedTimes() async {
+  try {
+    String formattedDate = _selectedDate.toIso8601String().substring(0, 10);
+
+    _bookedTimes = await ApiService().fetchJamSewa(
+      widget.meja.idmeja,
+      formattedDate,
+    );
+
+    // Tambahkan log untuk mencetak waktu yang telah di-fetch
+    _bookedTimes.forEach((jamSewa) {
+      print('Fetched booked time: ${jamSewa.jam} , ${jamSewa.tanggal}');
+    });
+
+    // Perbarui UI setelah pembaruan data
+    setState(() {
+      // Panggil _showDialog() di sini untuk memastikan bahwa pembaruan data selesai sebelum tampilan dialog ditampilkan
       _showDialog();
     });
+  } catch (e) {
+    print('Error fetching booked times: $e');
   }
+}
 
-  void _showDialog() {
+  Future<void> _showDialog() async {
     showDialog(
       context: context,
-      barrierDismissible:
-          false, // Prevent dismiss by tapping outside of the dialog
+      barrierDismissible: false,
       builder: (BuildContext context) {
-        return SingleChildScrollView(
-          child: Dialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25),
-            ),
-            child: Stack(
-              children: [
-                Container(
-                  // margin: EdgeInsets.symmetric(horizontal: 45),
-                  width: 400,
-                  height: 900,
-                  decoration: ShapeDecoration(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    shadows: [
-                      BoxShadow(
-                        color: Color(0x3F000000),
-                        blurRadius: 10,
-                        offset: Offset(0, -4),
-                        spreadRadius: 0,
-                      ),
-                      BoxShadow(
-                        color: Color(0x3F000000),
-                        blurRadius: 4,
-                        offset: Offset(0, 4),
-                        spreadRadius: 0,
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 335,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: Text(
-                          "Mini Tables Billiard",
-                          style: GoogleFonts.poppins(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xffFBBC05)),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 7,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                "Lorem ipsum dolor sit amet.",
-                                style: GoogleFonts.inter(
-                                    fontSize: 12, color: Color(0xff000000)),
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  "12.000",
-                                  style: GoogleFonts.inter(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xffFBBC05)),
-                                ),
-                                Text(
-                                  "/Hour",
-                                  style: GoogleFonts.inter(
-                                      fontSize: 12, color: Color(0xff000000)),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 8),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: Wrap(
-                          spacing: 10, // Jarak antara tombol waktu
-                          runSpacing: 8, // Jarak antara baris
-                          children: [
-                            buildTimeButton("12:00"),
-                            buildTimeButton("13:00"),
-                            buildTimeButton("14:00"),
-                            buildTimeButton("15:00"),
-                            buildTimeButton("16:00"),
-                            buildTimeButton("17:00"),
-                            buildTimeButton("18:00"),
-                            buildTimeButton("19:00"),
-                            buildTimeButton("20:00"),
-                            buildTimeButton("21:00"),
-                            buildTimeButton("22:00"),
-                            buildTimeButton("23:00"),
-                            buildTimeButton("00:00"),
-                            buildTimeButton("01:00"),
-                            buildTimeButton("02:00"),
-                            buildTimeButton("03:00"),
-                          ],
-                        ),
-                      ),
-                      Padding(padding: EdgeInsets.all(20),
-                      child: TextField(
-                        controller: _dateController,
-                        decoration: InputDecoration(
-                          labelText: 'DATE',
-                          filled: true,
-                          prefixIcon: Icon(Icons.calendar_today),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xffFBBC05))
-                          )
-                        ),
-                        readOnly: true,
-                        onTap: (){
-                          _selectDate();
-                        },
-                      ),
-                      ),
-                      Container(
-                        child: ElevatedButton(
-                      onPressed: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) => NavigationMenu()),
-                        // );
-                      },
-                      child: Text(
-                        "Log In",
-                        style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: Color(0xffFBBC05), fontSize: 15),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xff000000)),
-                    )
-                      )
-                    ],
-                  ),
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+          child: SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.all(20),
+              decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25),
                 ),
-                
-                Positioned(
-                  top: 40, // Adjusted top value
-                  left: 0,
-                  right: 0,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment:
-                        CrossAxisAlignment.center, // Center vertically
+                shadows: [
+                  BoxShadow(
+                    color: Color(0x3F000000),
+                    blurRadius: 10,
+                    offset: Offset(0, -4),
+                    spreadRadius: 0,
+                  ),
+                  BoxShadow(
+                    color: Color(0x3F000000),
+                    blurRadius: 4,
+                    offset: Offset(0, 4),
+                    spreadRadius: 0,
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Detail",
-                        style: GoogleFonts.poppins(
+                      IconButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                        },
+                        icon: Icon(Icons.close),
+                      ),
+                      SizedBox(width: 20), // Added some spacing
+                    ],
+                  ),
+                  Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          "Detail",
+                          style: GoogleFonts.poppins(
                             fontSize: 25,
                             fontWeight: FontWeight.w600,
-                            color: Color(0xffFBBC05)),
-                      )
-                    ],
-                  ),
-                ),
-                Positioned(
-                  top: 90,
-                  left: 0,
-                  right: 0,
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: Container(
-                      width: 240,
-                      height: 240,
-                      decoration: BoxDecoration(
-                          // color: Colors.red,
-                          borderRadius: BorderRadius.circular(30),
-                          image: DecorationImage(
-                              image: AssetImage("lib/data/page.png"),
-                              fit: BoxFit.cover)),
+                            color: Color(0xffFBBC05),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        Container(
+                          width: 240,
+                          height: 240,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            image: DecorationImage(
+                              image:
+                                  AssetImage("lib/image/" + widget.meja.foto),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-                Positioned(
-                  top: 10,
-                  right: 10,
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(); // Close the dialog
-                    },
-                    icon: Icon(Icons.close),
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      widget.meja.nm, // Menggunakan nama dari objek Meja
+                      style: GoogleFonts.poppins(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xffFBBC05),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                  SizedBox(height: 7),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            widget.meja.ket.isNotEmpty
+                                ? widget.meja.ket
+                                : "Lorem ipsum dolor sit amet.",
+                            style: GoogleFonts.inter(
+                              fontSize: 12,
+                              color: Color(0xff000000),
+                            ),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              widget.meja.harga,
+                              style: GoogleFonts.inter(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xffFBBC05),
+                              ),
+                            ),
+                            Text(
+                              "/Hour",
+                              style: GoogleFonts.inter(
+                                fontSize: 12,
+                                color: Color(0xff000000),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Wrap(
+                      spacing: 10, // Jarak antara tombol waktu
+                      runSpacing: 8, // Jarak antara baris
+                      children: [
+                        buildTimeButton("12:00"),
+                        buildTimeButton("13:00"),
+                        // Tambahkan tombol waktu lainnya sesuai kebutuhan
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(20),
+                    child: TextField(
+                      controller: _dateController,
+                      decoration: InputDecoration(
+                        labelText: 'DATE',
+                        filled: true,
+                        prefixIcon: Icon(Icons.calendar_today),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xffFBBC05)),
+                        ),
+                      ),
+                      readOnly: true,
+                      onTap: () {
+                        _selectDate();
+                      },
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    height: 40,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Tambahkan logika backend di sini
+                      },
+                      child: Text(
+                        "Booking Now",
+                        style: GoogleFonts.inter(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xffffffffff),
+                          fontSize: 15,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xffFBBC05),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20), // Added space at the bottom
+                ],
+              ),
             ),
           ),
         );
@@ -232,46 +243,63 @@ class _DialogMejaState extends State<DialogMeja> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor:
-          Colors.transparent, // Optional: Make background transparent
+  Future<void> _selectDate() async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2100),
     );
+
+    if (pickedDate != null) {
+      setState(() {
+        _selectedDate = pickedDate;
+        // Format tanggal sesuai dengan format ymd
+        _dateController.text =
+            "${_selectedDate.year}-${_selectedDate.month.toString().padLeft(2, '0')}-${_selectedDate.day.toString().padLeft(2, '0')}";
+      });
+
+      _fetchBookedTimes(); // Panggil ulang untuk mengambil jam sewa baru berdasarkan tanggal yang dipilih
+    }
   }
 
-  Future<void> _selectDate() async{
- DateTime? _picked = await showDatePicker(context: context,initialDate: DateTime.now(), firstDate: DateTime(2000), lastDate: DateTime(21000));
-
-if (_picked != null){
-  setState((){
-    _dateController.text = _picked.toString().split(" ")[0];
-  });
-}
-}
-
-
-}
-
 Widget buildTimeButton(String time) {
+  // Periksa apakah waktu telah dipesan
+  bool isBookedOnSelectedDate = _bookedTimes.any((jamSewa) => jamSewa.jam == time);
+  print(
+      'Time: $time, isBookedOnSelectedDate: $isBookedOnSelectedDate'); // Tambahkan console log di sini
+
   return Container(
     width: 85,
     height: 40,
     child: ElevatedButton(
-      onPressed: () {
-        // Tambahkan logika backend di sini
-      },
+      onPressed: isBookedOnSelectedDate
+          ? null
+          : () {
+              // Tambahkan logika backend di sini
+            },
       style: ElevatedButton.styleFrom(
-        backgroundColor: Color(0xffFBBC05), // Warna latar belakang tombol
+        backgroundColor:
+            isBookedOnSelectedDate ? Colors.grey : Color(0xffFBBC05),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10), // Bentuk tombol
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
       child: Text(
         time,
-        style: TextStyle(color: Colors.white), // Warna teks
+        style: TextStyle(
+            color: isBookedOnSelectedDate ? Colors.black : Colors.white),
       ),
     ),
   );
 }
 
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+    );
+  }
+}

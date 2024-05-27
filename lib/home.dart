@@ -222,7 +222,7 @@ class _HomeState extends State<home> {
                     ),
                   ],
                 ),
-                Categorieswidget(),
+                CategoriesWidget(),
                 Column(
                   children: [
                     Container(

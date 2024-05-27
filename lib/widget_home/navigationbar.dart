@@ -4,7 +4,7 @@ import 'package:mobile_bl/RegisterPage.dart';
 import 'package:mobile_bl/home.dart';
 import 'package:mobile_bl/profile/profile_screen.dart';
 import 'package:mobile_bl/widget_home/detail_food.dart';
-import 'package:mobile_bl/profile/profile_screen.dart';
+
 
 class NavigationMenu extends StatefulWidget {
   const NavigationMenu({super.key});
@@ -44,7 +44,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Iconsax.video_time),
-            label: 'bila cantik',
+            label: 'Acti',
           ),
           BottomNavigationBarItem(
             icon: Icon(Iconsax.user),

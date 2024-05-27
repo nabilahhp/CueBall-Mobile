@@ -71,7 +71,9 @@ flutter:
     - lib/data/page.png
     - assets/icons/
     - lib/image/
-    - assets/images/Profile Image.png
+    - assets/images/french_fries.png
+    - assets/images/ice_tea.png
+    - assets/images/billiard.jpeg
     # The following line ensures that the Material Icons font is
     # included with your application, so that you can use the icons in
     # the material Icons class.

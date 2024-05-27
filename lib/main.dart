@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:mobile_bl/widget_home/food.dart';
 import 'screens/cart_screen.dart';
 import 'provider/cart_provider.dart';
+import 'screens/activity_screen.dart';
 
 final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 

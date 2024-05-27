@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mobile_bl/home.dart';
 import 'package:mobile_bl/main.dart';
-import 'package:mobile_bl/password/changepass.dart';
-import 'package:mobile_bl/profile/editprofile.dart';
-import 'package:mobile_bl/widget_home/navigationbar.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:mobile_bl/profile/editprofile.dart';
+import 'package:mobile_bl/password/changepass.dart';
+import 'package:mobile_bl/widget_home/navigationbar.dart';
 import 'package:mobile_bl/RegisterPage.dart';
 import 'package:mobile_bl/password/changepass.dart';
-
-import 'components/profile_menu.dart';
-import 'components/profile_pic.dart';
+import './components/profile_menu.dart';
+import './components/profile_pic.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
 class ProfileScreen extends StatelessWidget {
   // Fungsi untuk membuka WhatsApp
@@ -22,11 +23,29 @@ class ProfileScreen extends StatelessWidget {
     if (await canLaunch(url)) {
       await launch(url); // Buka URL jika memungkinkan
     } else {
-      print("Can't open WhatsApp"); // Tampilkan pesan jika tidak dapat membuka URL
+      print(
+          "Can't open WhatsApp"); // Tampilkan pesan jika tidak dapat membuka URL
     }
   }
 
-  const ProfileScreen({super.key});
+  const ProfileScreen({Key? key}) : super(key: key);
+
+  Future<void> _uploadImage(BuildContext context) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.image, // Hanya memilih file gambar
+    );
+
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      final directory = await getApplicationDocumentsDirectory();
+      final String newPath = "${directory.path}/profile_image.png";
+      await file.copy(newPath);
+      // Jika Anda ingin menampilkan gambar di UI, Anda bisa mengubah state menggunakan setState
+    } else {
+      // Pengguna membatalkan pemilihan file
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +55,9 @@ class ProfileScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: Column(
               children: [
-                SizedBox(height: 80), // Menambahkan jarak agar tidak tertutupi oleh tombol kembali
+                SizedBox(
+                    height:
+                        80), // Menambahkan jarak agar tidak tertutupi oleh tombol kembali
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
@@ -48,7 +69,11 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                ProfilePic(),
+                ProfilePic(
+                  onUploadPressed: () {
+                    _uploadImage(context);
+                  },
+                ),
                 SizedBox(height: 20),
                 ProfileMenu(
                   text: "Edit Profile",

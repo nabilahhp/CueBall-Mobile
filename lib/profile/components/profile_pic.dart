@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ProfilePic extends StatelessWidget {
+  final VoidCallback onUploadPressed;
+
   const ProfilePic({
     Key? key,
+    required this.onUploadPressed,
   }) : super(key: key);
 
   @override
@@ -26,13 +29,14 @@ class ProfilePic extends StatelessWidget {
               width: 46,
               child: TextButton(
                 style: TextButton.styleFrom(
-                  foregroundColor: Colors.white, shape: RoundedRectangleBorder(
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50),
                     side: const BorderSide(color: Colors.white),
                   ),
                   backgroundColor: const Color(0xFFF5F6F9),
                 ),
-                onPressed: () {},
+                onPressed: onUploadPressed, // Menggunakan properti onUploadPressed
                 child: SvgPicture.asset("assets/icons/Camera Icon.svg"),
               ),
             ),

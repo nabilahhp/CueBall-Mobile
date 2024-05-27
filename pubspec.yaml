@@ -31,6 +31,7 @@ dependencies:
   awesome_dialog: ^3.2.1
   clippy_flutter: ^2.0.0-nullsafety.1
   cupertino_icons: ^1.0.6
+  file_picker: ^8.0.3
   flutter:
     sdk: flutter
   flutter_launcher_icons: ^0.13.1
@@ -70,6 +71,7 @@ flutter:
     - lib/data/page.png
     - assets/icons/
     - lib/image/
+    - assets/images/Profile Image.png
     # The following line ensures that the Material Icons font is
     # included with your application, so that you can use the icons in
     # the material Icons class.

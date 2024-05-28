@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ActivityPage extends StatefulWidget {
   @override
@@ -14,24 +15,21 @@ class _ActivityPageState extends State<ActivityPage> {
       'description': 'Lorem ipsum dolor sit amet.',
       'imagePath': 'lib/image/french_fries.png',
       'price': '00,0K',
-      'buttonText': 'Cancel Order',
-      'status': 'On Going',
+      'status': 'Belum Bayar',
     },
     {
       'title': 'Ice Tea',
       'description': 'Lorem ipsum dolor sit amet.',
       'imagePath': 'assets/images/ice_tea.png',
       'price': '00,0K',
-      'buttonText': 'Cancel Order',
-      'status': 'On Going',
+      'status': 'Belum Bayar',
     },
     {
       'title': 'Mini Tables Billiard',
       'description': 'Lorem ipsum dolor sit amet.',
       'imagePath': 'assets/images/billiard.jpeg',
       'price': '00,0K',
-      'buttonText': 'Give Review',
-      'status': 'Completed',
+      'status': 'Sudah Bayar',
     },
   ];
 
@@ -41,127 +39,115 @@ class _ActivityPageState extends State<ActivityPage> {
 
     List<Map<String, dynamic>> displayedActivities = _selectedTab == 0
         ? allActivities
-        : allActivities.where((activity) => activity['status'] == (_selectedTab == 1 ? 'On Going' : 'Completed')).toList();
+        : allActivities.where((activity) => activity['status'] == (_selectedTab == 1 ? 'Belum Bayar' : 'Sudah Bayar')).toList();
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Your Activity!',
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: screenWidth * 0.05, // Responsive font size
-              ),
-            ),
-            Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt.',
-              style: TextStyle(
-                color: Colors.black54,
-                fontSize: screenWidth * 0.03, // Responsive font size
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.notifications, color: Colors.black),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('lib/data/latar.png'),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Padding(
-          padding: EdgeInsets.all(screenWidth * 0.05), // Responsive padding
+        title: SizedBox(
+          width: double.infinity,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextField(
-                decoration: InputDecoration(
-                  hintText: 'Search...',
-                  prefixIcon: Icon(Icons.search),
-                  suffixIcon: Icon(Icons.filter_list),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(screenWidth * 0.02), // Responsive border radius
-                    borderSide: BorderSide.none,
-                  ),
-                  filled: true,
-                  fillColor: Colors.grey.withOpacity(0.5), // Set the opacity here
+              Text(
+                'Your Activity!',
+                style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: screenWidth * 0.05, // Responsive font size
                 ),
               ),
-              SizedBox(height: screenWidth * 0.02), // Responsive spacing
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    child: ChoiceChip(
-                      label: Text('All'),
-                      selected: _selectedTab == 0,
-                      onSelected: (bool selected) {
-                        setState(() {
-                          _selectedTab = 0;
-                        });
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    child: ChoiceChip(
-                      label: Text('On Going'),
-                      selected: _selectedTab == 1,
-                      onSelected: (bool selected) {
-                        setState(() {
-                          _selectedTab = 1;
-                        });
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    child: ChoiceChip(
-                      label: Text('Completed'),
-                      selected: _selectedTab == 2,
-                      onSelected: (bool selected) {
-                        setState(() {
-                          _selectedTab = 2;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: screenWidth * 0.02), // Responsive spacing
-              Expanded(
-                child: ListView.builder(
-                  itemCount: displayedActivities.length,
-                  itemBuilder: (context, index) {
-                    return _buildActivityCard(
-                      context,
-                      displayedActivities[index]['title'],
-                      displayedActivities[index]['description'],
-                      displayedActivities[index]['imagePath'],
-                      displayedActivities[index]['price'],
-                      displayedActivities[index]['buttonText'],
-                    );
-                  },
+              Text(
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt.',
+                style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontSize: screenWidth * 0.03, // Responsive font size
                 ),
               ),
             ],
           ),
         ),
       ),
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('lib/data/latar.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(screenWidth * 0.05), // Responsive padding
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(height: screenWidth * 0.02), // Responsive spacing
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: ChoiceChip(
+                        label: Text('All'),
+                        selected: _selectedTab == 0,
+                        onSelected: (bool selected) {
+                          setState(() {
+                            _selectedTab = 0;
+                          });
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: ChoiceChip(
+                        label: Text('Belum Bayar'),
+                        selected: _selectedTab == 1,
+                        onSelected: (bool selected) {
+                          setState(() {
+                            _selectedTab = 1;
+                          });
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: ChoiceChip(
+                        label: Text('Sudah Bayar'),
+                        selected: _selectedTab == 2,
+                        onSelected: (bool selected) {
+                          setState(() {
+                            _selectedTab = 2;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: screenWidth * 0.02), // Responsive spacing
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: displayedActivities.length,
+                    itemBuilder: (context, index) {
+                      return _buildActivityCard(
+                        context,
+                        displayedActivities[index]['title'],
+                        displayedActivities[index]['description'],
+                        displayedActivities[index]['imagePath'],
+                        displayedActivities[index]['price'],
+                        displayedActivities[index]['status'],
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _buildActivityCard(BuildContext context, String title, String description, String imagePath, String price, String buttonText) {
+  Widget _buildActivityCard(BuildContext context, String title, String description, String imagePath, String price, String status) {
     return Card(
       margin: EdgeInsets.symmetric(vertical: 8),
       child: ListTile(
@@ -171,13 +157,41 @@ class _ActivityPageState extends State<ActivityPage> {
         trailing: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(price, style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold)),
-            TextButton(
-              onPressed: () {},
-              child: Text(buttonText, style: TextStyle(color: Colors.red)),
-            ),
+            Text(price, style: GoogleFonts.poppins(color: Colors.orange, fontWeight: FontWeight.bold)),
+            if (status == 'Belum Bayar')
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PaymentPage()),
+                  );
+                },
+                child: Text(
+                  'Belum Bayar',
+                  style: GoogleFonts.poppins(color: Colors.red),
+                ),
+              ),
+            if (status == 'Sudah Bayar')
+              Text(
+                'Sudah Bayar',
+                style: GoogleFonts.poppins(color: Colors.green),
+              ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class PaymentPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Payment Page'),
+      ),
+      body: Center(
+        child: Text('This is the payment page!'),
       ),
     );
   }

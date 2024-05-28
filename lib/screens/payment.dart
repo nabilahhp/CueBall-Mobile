@@ -1,17 +1,36 @@
-// payment_page.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import '../models/cart_item.dart';
+import 'dart:io';
 
-class PaymentPage extends StatelessWidget {
+class PaymentPage extends StatefulWidget {
   final List<CartItem> items;
 
   const PaymentPage({Key? key, required this.items}) : super(key: key);
 
   @override
+  _PaymentPageState createState() => _PaymentPageState();
+}
+
+class _PaymentPageState extends State<PaymentPage> {
+  File? _image;
+  String? _selectedPaymentMethod;
+
+  Future<void> _pickImage() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     // Menghitung total harga dari item
-    final double totalPrice = items.fold(0, (sum, item) => sum + item.price);
+    final double totalPrice = widget.items.fold(0, (sum, item) => sum + item.price);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -40,7 +59,7 @@ class PaymentPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Contact Information',
+              'Payment Information',
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
@@ -53,39 +72,23 @@ class PaymentPage extends StatelessWidget {
                 color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Row(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.person, color: Colors.orange),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Charles Leclerc',
-                          style: GoogleFonts.poppins(
-                            fontSize: 14,
-                          ),
-                        ),
-                        Text(
-                          '+84932000000',
-                          style: GoogleFonts.poppins(
-                            fontSize: 14,
-                            color: Colors.orange,
-                          ),
-                        ),
-                        Text(
-                          'charlesleclerc@example.com',
-                          style: GoogleFonts.poppins(
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
+                  Text(
+                    'BCA: 844707404264929',
+                    style: GoogleFonts.poppins(
+                      fontSize: 14,
+                      color: Colors.black,
                     ),
                   ),
-                  IconButton(
-                    icon: Icon(Icons.edit, color: Colors.orange),
-                    onPressed: () {},
+                  SizedBox(height: 4),
+                  Text(
+                    'BRI: 849629048026',
+                    style: GoogleFonts.poppins(
+                      fontSize: 14,
+                      color: Colors.black,
+                    ),
                   ),
                 ],
               ),
@@ -101,9 +104,9 @@ class PaymentPage extends StatelessWidget {
             SizedBox(height: 8),
             Expanded(
               child: ListView.builder(
-                itemCount: items.length,
+                itemCount: widget.items.length,
                 itemBuilder: (context, index) {
-                  final cartItem = items[index];
+                  final cartItem = widget.items[index];
                   return _buildItem(context, cartItem.name, cartItem.price as double);
                 },
               ),
@@ -126,40 +129,60 @@ class PaymentPage extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-            Text(
-              'Lorem ipsum dolor sit amet consectetur.',
-              style: GoogleFonts.poppins(
-                fontSize: 14,
-                color: Colors.grey,
-              ),
-            ),
-            SizedBox(height: 8),
             DropdownButtonFormField<String>(
               items: [
-                DropdownMenuItem(value: '1', child: Text('Choose Your Payment')),
+                DropdownMenuItem(value: 'BCA', child: Text('BCA')),
+                DropdownMenuItem(value: 'BRI', child: Text('BRI')),
               ],
-              onChanged: (value) {},
+              onChanged: (value) {
+                setState(() {
+                  _selectedPaymentMethod = value;
+                });
+              },
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
+              hint: Text('Choose Your Payment'),
             ),
             SizedBox(height: 16),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Choose File',
-                border: OutlineInputBorder(
+            InkWell(
+              onTap: _pickImage,
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.orange),
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: Colors.orange),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.upload_file, color: Colors.orange),
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        _image == null ? 'Choose File' : 'File Selected',
+                        style: GoogleFonts.poppins(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
+            if (_image != null) ...[
+              SizedBox(height: 8),
+              Image.file(
+                _image!,
+                height: 150,
+              ),
+            ],
             SizedBox(height: 16),
             Spacer(),
             Text(
-              'Total (${items.length} items) :',
+              'Total (${widget.items.length} items) :',
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
@@ -178,13 +201,14 @@ class PaymentPage extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 16), backgroundColor: Colors.black,
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  backgroundColor: Colors.black,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
                 child: Text(
-                  'Checkout',
+                  'Pay',
                   style: GoogleFonts.poppins(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,

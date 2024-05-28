@@ -3,6 +3,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:mobile_bl/RegisterPage.dart';
 import 'package:mobile_bl/home.dart';
 import 'package:mobile_bl/profile/profile_screen.dart';
+import 'package:mobile_bl/screens/activity_screen.dart';
 import 'package:mobile_bl/widget_home/detail_food.dart';
 
 
@@ -18,7 +19,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
 
   static const List<Widget> _pages = <Widget>[
     home(),
-    RegisterPage(),
+    ActivityPage(),
     ProfileScreen()
   ];
 
@@ -44,7 +45,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Iconsax.video_time),
-            label: 'Acti',
+            label: 'Activity',
           ),
           BottomNavigationBarItem(
             icon: Icon(Iconsax.user),

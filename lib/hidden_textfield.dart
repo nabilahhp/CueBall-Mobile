@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class PasswordTextFieldLogin extends StatefulWidget {
   final TextEditingController controller;
 
-  PasswordTextFieldLogin({Key? key, required this.controller}) : super(key: key);
+  PasswordTextFieldLogin({Key? key, required this.controller})
+      : super(key: key);
 
   @override
   _PasswordTextFieldStateLogin createState() => _PasswordTextFieldStateLogin();
@@ -53,11 +54,16 @@ class _PasswordTextFieldStateLogin extends State<PasswordTextFieldLogin> {
   }
 }
 
-
 //Textfield create pass 1
+
 class PasswordTextFieldCPass1 extends StatefulWidget {
+  final ValueChanged<String>? onChanged; // Tambahkan parameter onChanged
+
+  const PasswordTextFieldCPass1({Key? key, this.onChanged}) : super(key: key);
+
   @override
-  _PasswordTextFieldStateCPass1 createState() => _PasswordTextFieldStateCPass1();
+  _PasswordTextFieldStateCPass1 createState() =>
+      _PasswordTextFieldStateCPass1();
 }
 
 class _PasswordTextFieldStateCPass1 extends State<PasswordTextFieldCPass1> {
@@ -80,6 +86,7 @@ class _PasswordTextFieldStateCPass1 extends State<PasswordTextFieldCPass1> {
         child: Stack(
           children: [
             TextField(
+              onChanged: widget.onChanged, // Gunakan onChanged dari widget induk
               obscureText: !isLogoPressed,
               decoration: InputDecoration(
                 hintText: "Must Be 8 Characters",
@@ -103,10 +110,16 @@ class _PasswordTextFieldStateCPass1 extends State<PasswordTextFieldCPass1> {
   }
 }
 
+
 //Textfield create pass 2
 class PasswordTextFieldCPass2 extends StatefulWidget {
+  final ValueChanged<String>? onChanged; // Tambahkan parameter onChanged
+
+  const PasswordTextFieldCPass2({Key? key, this.onChanged}) : super(key: key);
+
   @override
-  _PasswordTextFieldStateCPass2 createState() => _PasswordTextFieldStateCPass2();
+  _PasswordTextFieldStateCPass2 createState() =>
+      _PasswordTextFieldStateCPass2();
 }
 
 class _PasswordTextFieldStateCPass2 extends State<PasswordTextFieldCPass2> {
@@ -129,9 +142,10 @@ class _PasswordTextFieldStateCPass2 extends State<PasswordTextFieldCPass2> {
         child: Stack(
           children: [
             TextField(
+              onChanged: widget.onChanged, // Gunakan onChanged dari widget induk
               obscureText: !isLogoPressed,
               decoration: InputDecoration(
-                hintText: "Repeat Password",
+                hintText: "Must Be 8 Characters",
                 border: InputBorder.none,
                 contentPadding:
                     EdgeInsets.symmetric(horizontal: 18, vertical: 16),
@@ -152,10 +166,12 @@ class _PasswordTextFieldStateCPass2 extends State<PasswordTextFieldCPass2> {
   }
 }
 
+
 //Change Password
 class PasswordTextFieldChPass extends StatefulWidget {
   @override
-  _PasswordTextFieldStateChPass createState() => _PasswordTextFieldStateChPass();
+  _PasswordTextFieldStateChPass createState() =>
+      _PasswordTextFieldStateChPass();
 }
 
 class _PasswordTextFieldStateChPass extends State<PasswordTextFieldChPass> {

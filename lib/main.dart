@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_bl/password/forgot.dart';
 import 'package:mobile_bl/widget_home/navigationbar.dart';
+import 'package:mobile_bl/api/user_provider.dart';
+import 'package:mobile_bl/api/user.dart';
 import 'constans.dart';
 import 'RegisterPage.dart';
 import 'hidden_textfield.dart';
@@ -18,6 +20,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => UserProvider()),
       ],
       child: const MyApp(),
     ),
@@ -38,9 +41,9 @@ class MyApp extends StatelessWidget {
 
 class LoginPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
-final TextEditingController passwordController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
-Future<void> login(BuildContext context) async {
+  Future<void> login(BuildContext context) async {
     final String email = emailController.text;
     final String password = passwordController.text;
 
@@ -53,39 +56,67 @@ Future<void> login(BuildContext context) async {
       return;
     }
 
-    final response = await http.post(
-      Uri.parse('http://localhost:8000/projek_api/get_user.php'),
-      body: {'email': email, 'password': password},
-    );
-
-    print('Response Status Code: ${response.statusCode}');
-    print('Response Body: ${response.body}');
-
-    final responseData = json.decode(response.body);
-
-    if (responseData['success'] != null && responseData['success'] == 'Login successful') {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => NavigationMenu()),
+    try {
+      final response = await http.post(
+        Uri.parse('http://localhost:8000/projek_api/get_user.php'),
+        body: {'email': email, 'password': password},
       );
-    } else if (responseData['error'] != null) {
+
+      print('Response Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+        if (responseData['success'] != null &&
+            responseData['success'] == 'Login successful') {
+          // Mendapatkan nilai nama lengkap dari respons server
+          String namaLengkap = responseData['nama_lengkap'] ?? '';
+          String idUser = responseData['id_user'] ?? '';
+          String hp = responseData['hp'] ?? '';
+          String jenisKelamin = responseData['jenis_kelamin'] ?? '';
+          String alamat = responseData['alamat'] ?? '';
+          String foto = responseData['foto'] ?? '';
+          // Membuat objek User baru dengan nilai nama lengkap
+          User user = User(
+            idUser: idUser,
+            email: email,
+            password: password,
+            hp: hp,
+            jenisKelamin: jenisKelamin,
+            namaLengkap: namaLengkap,
+            alamat: alamat,
+            foto: foto,
+          );
+          // Memperbarui UserProvider dengan objek User baru
+          Provider.of<UserProvider>(context, listen: false).setUser(user);
+          // Navigasi ke halaman berikutnya
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => NavigationMenu()),
+          );
+          // Lakukan tindakan lain jika diperlukan
+        } else if (responseData['error'] != null) {
+          // Tangani kesalahan jika login gagal
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(responseData['error'])),
+          );
+          print(responseData['error']);
+        } else {
+          // Tangani kesalahan jika respons tidak sesuai dengan yang diharapkan
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to login. Please try again later.')),
+          );
+          print('Failed to login. Please try again later.');
+        }
+      }
+    } catch (error) {
+      // Tangani kesalahan jika terjadi error selama proses login
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(responseData['error'])),
+        SnackBar(content: Text('Error: $error')),
       );
-      print(responseData['error']);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to login. Please try again later.')),
-      );
-      print('Failed to login. Please try again later.');
+      print('Error: $error');
     }
-    print('Email: $email');
-print('Password: $password');
-
-}
-
-
-
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -150,13 +181,14 @@ print('Password: $password');
                     ),
                     SizedBox(height: 5),
                     Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: whiteColor,
-                      ),
-                      child: PasswordTextFieldLogin(controller: passwordController,)
-                    ),
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: whiteColor,
+                        ),
+                        child: PasswordTextFieldLogin(
+                          controller: passwordController,
+                        )),
                   ],
                 ),
                 SizedBox(height: 15),
@@ -255,7 +287,7 @@ print('Password: $password');
                       },
                       child: Text(
                         "Sign Up",
-                        style: Interrrstyle.copyWith(fontSize: 15),
+                        style: Interstyle.copyWith(fontSize: 15),
                       ),
                     ),
                   ],

@@ -18,7 +18,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
 
   static const List<Widget> _pages = <Widget>[
     home(),
-    RegisterPage(),
+    // RegisterPage(),
     ProfileScreen()
   ];
 

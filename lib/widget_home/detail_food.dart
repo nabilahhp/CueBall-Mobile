@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_bl/constans.dart';
 import 'package:mobile_bl/widget_home/app_icon.dart';
 
 class PopularFoodDetail extends StatelessWidget {

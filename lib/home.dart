@@ -5,8 +5,6 @@ import 'package:mobile_bl/widget_home/categorismeja.dart';
 import 'package:mobile_bl/widget_home/food.dart';
 import 'package:mobile_bl/api/user_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class home extends StatefulWidget {
   final String idUser;

@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../provider/cart_provider.dart';
 import '../models/cart_item.dart';
-import 'package:mobile_bl/screens/cart_screen.dart'; // Import CartScreen
 
 class food extends StatefulWidget {
   const food({Key? key}) : super(key: key);

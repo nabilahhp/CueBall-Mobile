@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_bl/main.dart';
-import 'package:mobile_bl/screens/activity_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:mobile_bl/profile/editprofile.dart';
-import 'package:mobile_bl/password/changepass.dart';
-import 'package:mobile_bl/widget_home/navigationbar.dart';
-import 'package:mobile_bl/RegisterPage.dart';
 import 'package:mobile_bl/password/changepass.dart';
 import './components/profile_menu.dart';
 import './components/profile_pic.dart';
@@ -89,15 +85,7 @@ class ProfileScreen extends StatelessWidget {
                 ProfileMenu(
                   text: "Notifications",
                   icon: "assets/icons/Bell.svg",
-                  press: () {
-<<<<<<< Updated upstream
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => ActivityPage(idUser: idUser,)),
-                    // );
-=======
->>>>>>> Stashed changes
-                  },
+                  press: () {}
                 ),
                 ProfileMenu(
                   text: "Change Password",

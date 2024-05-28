@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:mobile_bl/RegisterPage.dart';
 import 'package:mobile_bl/home.dart';
 import 'package:mobile_bl/profile/profile_screen.dart';
 import 'package:mobile_bl/screens/activity_screen.dart';
-import 'package:mobile_bl/widget_home/detail_food.dart';
 
 
 class NavigationMenu extends StatefulWidget {
@@ -20,7 +17,6 @@ class _NavigationMenuState extends State<NavigationMenu> {
   int _selectedIndex = 0;
   late List<Widget> _pages; // Buat variabel _pages di sini
 
-<<<<<<< Updated upstream
   @override
   void initState() {
     super.initState();
@@ -31,13 +27,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
       ProfileScreen()
     ];
   }
-=======
-  static List<Widget> _pages = <Widget>[
-    home(),
-    ActivityPage(),
-    ProfileScreen()
-  ];
->>>>>>> Stashed changes
+
 
   void _onItemTapped(int index) {
     setState(() {

@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_bl/main.dart';
-import 'package:mobile_bl/number.dart';
-import 'package:mobile_bl/profile/profile_screen.dart';
-import 'package:mobile_bl/widget_home/navigationbar.dart';
 import '../constans.dart';
 import 'package:google_fonts/google_fonts.dart';
 

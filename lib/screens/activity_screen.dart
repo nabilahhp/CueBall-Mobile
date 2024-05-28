@@ -242,9 +242,4 @@ void onLoginSuccess(String idUser) {
 }
 
 void handleLoginSuccess(String idUser) {
-  onLoginSuccess(idUser);
-<<<<<<< Updated upstream
-}
-=======
-}
->>>>>>> Stashed changes
+  onLoginSuccess(idUser);}

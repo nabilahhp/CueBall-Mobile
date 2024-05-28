@@ -1,6 +1,5 @@
 // cart_screen.dart
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../provider/cart_provider.dart';
 import '../widgets/check_out_box.dart';
 import '../constans.dart';

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_bl/main.dart';
-import 'package:mobile_bl/profile/profile_screen.dart';
-import 'package:mobile_bl/widget_home/navigationbar.dart';
 import '../constans.dart'; // Pastikan nama file ini benar, jika salah ganti dengan nama yang sesuai
 import 'package:google_fonts/google_fonts.dart';
 import '../hidden_textfield.dart'; // Pastikan file ini ada dan berfungsi dengan baik

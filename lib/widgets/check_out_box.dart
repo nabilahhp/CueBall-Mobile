@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_bl/models/cart_item.dart';
 import 'package:mobile_bl/screens/payment.dart';
-import 'package:provider/provider.dart';
 import '../provider/cart_provider.dart';
 import '../constans.dart';
 

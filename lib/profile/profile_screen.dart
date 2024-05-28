@@ -90,10 +90,13 @@ class ProfileScreen extends StatelessWidget {
                   text: "Notifications",
                   icon: "assets/icons/Bell.svg",
                   press: () {
+<<<<<<< Updated upstream
                     // Navigator.push(
                     //   context,
                     //   MaterialPageRoute(builder: (context) => ActivityPage(idUser: idUser,)),
                     // );
+=======
+>>>>>>> Stashed changes
                   },
                 ),
                 ProfileMenu(

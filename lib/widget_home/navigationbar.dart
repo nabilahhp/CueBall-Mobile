@@ -20,6 +20,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
   int _selectedIndex = 0;
   late List<Widget> _pages; // Buat variabel _pages di sini
 
+<<<<<<< Updated upstream
   @override
   void initState() {
     super.initState();
@@ -30,6 +31,13 @@ class _NavigationMenuState extends State<NavigationMenu> {
       ProfileScreen()
     ];
   }
+=======
+  static List<Widget> _pages = <Widget>[
+    home(),
+    ActivityPage(),
+    ProfileScreen()
+  ];
+>>>>>>> Stashed changes
 
   void _onItemTapped(int index) {
     setState(() {

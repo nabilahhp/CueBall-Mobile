@@ -16,3 +16,15 @@ class CartItem {
     this.quantity = 1,
   });
 }
+// Assuming CartItem class has a proper fromJson method
+CartItem fromJson(Map<String, dynamic> json) {
+  return CartItem(
+    id: json['id'],
+    name: json['name'],
+    description: json['description'],
+    price: json['price'],
+    quantity: json['quantity'],
+    image: json['image'],
+  );
+}
+

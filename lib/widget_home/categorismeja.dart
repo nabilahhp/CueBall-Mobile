@@ -6,7 +6,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class CategoriesWidget extends StatefulWidget {
-  const CategoriesWidget({Key? key}) : super(key: key);
+  final String idUser;
+  const CategoriesWidget({Key? key, required this.idUser}) : super(key: key);
 
   @override
   _CategoriesWidgetState createState() => _CategoriesWidgetState();
@@ -58,7 +59,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => DetailPage(meja: meja),
+                            builder: (context) => DetailPage(meja: meja, idUser: widget.idUser),
                           ),
                         );
                       },

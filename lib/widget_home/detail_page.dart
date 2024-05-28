@@ -5,8 +5,9 @@ import 'package:mobile_bl/api/meja.dart'; // Import model Meja
 
 class DetailPage extends StatelessWidget {
   final Meja meja;
+  final String idUser;
 
-  const DetailPage({Key? key, required this.meja}) : super(key: key);
+  const DetailPage({Key? key, required this.meja, required this.idUser}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +138,7 @@ class DetailPage extends StatelessWidget {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return DialogMeja1(meja: meja);
+                              return DialogMeja1(meja: meja, idUser: idUser);
                             },
                           );
                         },

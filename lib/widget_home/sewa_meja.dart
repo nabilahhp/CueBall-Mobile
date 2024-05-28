@@ -3,12 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_bl/api/meja.dart'; // Import model Meja
 import 'package:mobile_bl/api/jam_sewa.dart'; // Import model JamSewa
 import 'package:mobile_bl/api/api_service.dart'; // Import API service
-import 'package:mobile_bl/api/api_servicemeja.dart'; // Import API service
+import 'package:mobile_bl/api/api_servicemeja.dart';
+import 'package:mobile_bl/widget_home/navigationbar.dart'; // Import API service
 
 class DialogMeja1 extends StatefulWidget {
+  final String idUser;
   final Meja meja;
 
-  const DialogMeja1({Key? key, required this.meja}) : super(key: key);
+  const DialogMeja1({Key? key, required this.meja, required this.idUser}) : super(key: key);
 
   @override
   State<DialogMeja1> createState() => _DialogMejaState();
@@ -21,27 +23,35 @@ class _DialogMejaState extends State<DialogMeja1> {
   late Map<String, Color> _timeButtonColors;
   List<String> _selectedTimes = [];
   bool _isDateSelected = false;
+  
 
-  Future<void> _bookMeja() async {
-    try {
-      await ApiServicemeja().bookMeja(
-        widget.meja.idmeja,
-        _selectedTimes,
-        _selectedDate,
-        'belum dibayar', // Mengirim status "belum dibayar"
-      );
-      // Tampilkan pesan sukses atau lakukan tindakan lain setelah booking berhasil
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Booking successful')),
-      );
-    } catch (e) {
-      print('Error booking meja: $e');
-      // Tampilkan pesan error
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Booking failed')),
-      );
-    }
+
+ void _bookMeja() async {
+  try {
+    await ApiServicemeja().bookMeja(
+      widget.meja.idmeja,
+      widget.idUser,
+      _selectedTimes,
+      _selectedDate,
+      'belum dibayar', // Mengirim status "belum dibayar"
+    );
+    // Pemanggilan metode untuk mengarahkan ke halaman aktivitas
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => NavigationMenu(selectedIndex: 1, idUser: widget.idUser)),
+    );
+    // Tampilkan pesan sukses atau lakukan tindakan lain setelah booking berhasil
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Booking successful')),
+    );
+  } catch (e) {
+    print('Error booking meja: $e');
+    // Tampilkan pesan error
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Booking failed')),
+    );
   }
+}
+
 
   @override
   void initState() {
@@ -51,6 +61,7 @@ class _DialogMejaState extends State<DialogMeja1> {
     _selectedTimes = [];
     _timeButtonColors = {}; // Initialize _timeButtonColors
     _fetchBookedTimes();
+    print(widget.idUser);
   }
 
   void _fetchBookedTimes() async {

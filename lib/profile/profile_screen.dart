@@ -89,10 +89,11 @@ class ProfileScreen extends StatelessWidget {
                 ProfileMenu(
                   text: "Notifications",
                   icon: "assets/icons/Bell.svg",
-                  press: () {Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ActivityPage()),
-                    );
+                  press: () {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => ActivityPage(idUser: idUser,)),
+                    // );
                   },
                 ),
                 ProfileMenu(
@@ -126,31 +127,32 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
-            left: 30,
-            top: 40,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-              ),
-              child: Center(
-                child: IconButton(
-                  padding: EdgeInsets.all(0),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => NavigationMenu()),
-                    );
-                  },
-                  icon: Icon(
-                    Icons.arrow_back_ios,
-                    color: Colors.yellow,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // Positioned(
+          //   left: 30,
+          //   top: 40,
+          //   child: Container(
+          //     decoration: BoxDecoration(
+          //       color: Colors.white,
+          //       shape: BoxShape.circle,
+          //     ),
+          //     child: Center(
+          //       child: IconButton(
+          //         padding: EdgeInsets.all(0),
+          //         onPressed: () {
+          //           Navigator.pushReplacement(
+          //             context,
+          //             MaterialPageRoute(
+          //                 builder: (context) => NavigationMenu(idUser: idUser)),
+          //           );
+          //         },
+          //         icon: Icon(
+          //           Icons.arrow_back_ios,
+          //           color: Colors.yellow,
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

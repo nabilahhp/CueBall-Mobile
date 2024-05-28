@@ -22,16 +22,17 @@ $data = json_decode(file_get_contents('php://input'), true);
 var_dump($data);
 
 $idmeja = $data['idmeja'];
+$iduser = $data['idUser'];
 $tanggal = $data['tanggal']; 
 $jam = $data['jam'];
 $status = $data['status'];
 
 // Insert data ke tabel
-$sql = "INSERT INTO jam_sewa (idmeja, tanggal, jam, status) VALUES (?, ?, ?, ?)";
+$sql = "INSERT INTO jam_sewa (idmeja, iduser, tanggal, jam, status) VALUES (?, ?, ?, ?, ?)";
 $stmt = $conn->prepare($sql);
 if ($stmt) {
   foreach ($jam as $j) {
-    $stmt->bind_param("ssss", $idmeja, $tanggal, $j, $status); // Ubah urutan tanggal dan jam
+    $stmt->bind_param("sssss", $idmeja, $iduser , $tanggal, $j, $status); // Ubah urutan tanggal dan jam
     $stmt->execute();
   }
   

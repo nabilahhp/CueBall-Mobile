@@ -4,7 +4,7 @@ import 'dart:convert';
 class ApiServicemeja {
   final String baseUrl = 'http://localhost:8000/projek_api/post_sewa.php'; 
 
-  Future<void> bookMeja(String idMeja, List<String> jam, DateTime tanggal, String status) async {
+  Future<void> bookMeja(String idMeja, String idUser, List<String> jam, DateTime tanggal, String status) async {
     final url = Uri.parse(baseUrl);
     
     // Format tanggal menjadi string dengan format yang diinginkan
@@ -18,6 +18,7 @@ class ApiServicemeja {
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'idmeja': idMeja,
+        'idUser': idUser,
         'tanggal': formattedDate, // Kirim tanggal yang diformat ke server
         'jam': jam,
         'status': status,

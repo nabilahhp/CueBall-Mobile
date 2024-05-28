@@ -9,7 +9,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class home extends StatefulWidget {
-  const home({Key? key}) : super(key: key);
+  final String idUser;
+  const home({Key? key, required this.idUser}) : super(key: key);
 
   @override
   State<home> createState() => _HomeState();
@@ -204,7 +205,7 @@ class _HomeState extends State<home> {
                     ),
                   ],
                 ),
-                CategoriesWidget(),
+                CategoriesWidget(idUser: widget.idUser),
                 Column(
                   children: [
                     Container(

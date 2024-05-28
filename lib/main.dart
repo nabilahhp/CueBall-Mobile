@@ -44,79 +44,80 @@ class LoginPage extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
 
   Future<void> login(BuildContext context) async {
-    final String email = emailController.text;
-    final String password = passwordController.text;
+  final String email = emailController.text;
+  final String password = passwordController.text;
 
-    // Validasi input
-    if (email.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Email and password are required')),
-      );
-      print('Email and password are required');
-      return;
-    }
-
-    try {
-      final response = await http.post(
-        Uri.parse('http://localhost:8000/projek_api/get_user.php'),
-        body: {'email': email, 'password': password},
-      );
-
-      print('Response Status Code: ${response.statusCode}');
-      print('Response Body: ${response.body}');
-
-      if (response.statusCode == 200) {
-        final responseData = json.decode(response.body);
-        if (responseData['success'] != null &&
-            responseData['success'] == 'Login successful') {
-          // Mendapatkan nilai nama lengkap dari respons server
-          String namaLengkap = responseData['nama_lengkap'] ?? '';
-          String idUser = responseData['id_user'] ?? '';
-          String hp = responseData['hp'] ?? '';
-          String jenisKelamin = responseData['jenis_kelamin'] ?? '';
-          String alamat = responseData['alamat'] ?? '';
-          String foto = responseData['foto'] ?? '';
-          // Membuat objek User baru dengan nilai nama lengkap
-          User user = User(
-            idUser: idUser,
-            email: email,
-            password: password,
-            hp: hp,
-            jenisKelamin: jenisKelamin,
-            namaLengkap: namaLengkap,
-            alamat: alamat,
-            foto: foto,
-          );
-          // Memperbarui UserProvider dengan objek User baru
-          Provider.of<UserProvider>(context, listen: false).setUser(user);
-          // Navigasi ke halaman berikutnya
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => NavigationMenu()),
-          );
-          // Lakukan tindakan lain jika diperlukan
-        } else if (responseData['error'] != null) {
-          // Tangani kesalahan jika login gagal
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(responseData['error'])),
-          );
-          print(responseData['error']);
-        } else {
-          // Tangani kesalahan jika respons tidak sesuai dengan yang diharapkan
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to login. Please try again later.')),
-          );
-          print('Failed to login. Please try again later.');
-        }
-      }
-    } catch (error) {
-      // Tangani kesalahan jika terjadi error selama proses login
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $error')),
-      );
-      print('Error: $error');
-    }
+  // Validasi input
+  if (email.isEmpty || password.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Email and password are required')),
+    );
+    print('Email and password are required');
+    return;
   }
+
+  try {
+    final response = await http.post(
+      Uri.parse('http://localhost:8000/projek_api/get_user.php'),
+      body: {'email': email, 'password': password},
+    );
+
+    print('Response Status Code: ${response.statusCode}');
+    print('Response Body: ${response.body}');
+
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body);
+      if (responseData['success'] != null &&
+          responseData['success'] == 'Login successful') {
+        // Mendapatkan nilai nama lengkap dari respons server
+        String namaLengkap = responseData['nama_lengkap'] ?? '';
+        String idUser = responseData['id_user'].toString() ?? '';
+        String hp = responseData['hp'] ?? '';
+        String jenisKelamin = responseData['jenis_kelamin'] ?? '';
+        String alamat = responseData['alamat'] ?? '';
+        String foto = responseData['foto'] ?? '';
+        // Membuat objek User baru dengan nilai nama lengkap
+        User user = User(
+          idUser: idUser,
+          email: email,
+          password: password,
+          hp: hp,
+          jenisKelamin: jenisKelamin,
+          namaLengkap: namaLengkap,
+          alamat: alamat,
+          foto: foto,
+        );
+        // Memperbarui UserProvider dengan objek User baru
+        Provider.of<UserProvider>(context, listen: false).setUser(user);
+        // Navigasi ke halaman berikutnya
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => NavigationMenu(selectedIndex: 0,idUser: idUser)),
+        );
+        // Lakukan tindakan lain jika diperlukan
+      } else if (responseData['error'] != null) {
+        // Tangani kesalahan jika login gagal
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(responseData['error'])),
+        );
+        print(responseData['error']);
+      } else {
+        // Tangani kesalahan jika respons tidak sesuai dengan yang diharapkan
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to login. Please try again later.')),
+        );
+        print('Failed to login. Please try again later.');
+      }
+    }
+  } catch (error) {
+    // Tangani kesalahan jika terjadi error selama proses login
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Error: $error')),
+    );
+    print('Error: $error');
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {

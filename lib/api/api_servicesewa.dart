@@ -1,10 +1,10 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class ApiServicemeja {
-  final String baseUrl = 'http://localhost:8000/projek_api/post_sewameja.php'; 
+class ApiServicesewameja {
+  final String baseUrl = 'http://localhost:8000/projek_api/post_sewa.php'; 
 
-  Future<void> bookMeja(String idMeja, String idUser, List<String> jam, DateTime tanggal, String status) async {
+  Future<void> bookSewa(String idMeja, String idUser, DateTime tanggal,  String harga, String tot, String status) async {
     final url = Uri.parse(baseUrl);
     
     // Format tanggal menjadi string dengan format yang diinginkan
@@ -17,10 +17,11 @@ class ApiServicemeja {
       url,
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
-        'idmeja': idMeja,
         'idUser': idUser,
-        'tanggal': formattedDate, // Kirim tanggal yang diformat ke server
-        'jam': jam,
+        'idmeja': idMeja,
+        'tanggal': formattedDate, 
+        'harga': harga,
+        'tot': tot,
         'status': status,
       }),
     );

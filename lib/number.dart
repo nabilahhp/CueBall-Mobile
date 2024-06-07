@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 class Number extends StatefulWidget {
   final String nameController;
   final String emailController;
-  final String selectedGender; // Mengubah tipe data menjadi String
+  final String selectedGender;
 
   const Number({
     Key? key,
@@ -20,10 +20,17 @@ class Number extends StatefulWidget {
   _NumberState createState() => _NumberState();
 }
 
-
 class _NumberState extends State<Number> {
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController addressController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    // Log data ke konsol
+    print('Name: ${widget.nameController}');
+    print('Email: ${widget.emailController}');
+    print('Selected Gender: ${widget.selectedGender}');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +125,7 @@ class _NumberState extends State<Number> {
                         // Logging the values to the console
                         print('Phone Number: ${phoneNumberController.text}');
                         print('Address: ${addressController.text}');
-                        
+
                         // Navigasi ke halaman selanjutnya dengan membawa data nomor telepon dan alamat
                         Navigator.push(
                           context,
@@ -126,8 +133,8 @@ class _NumberState extends State<Number> {
                             builder: (context) => Profiladd(
                               phoneNumber: phoneNumberController.text,
                               address: addressController.text,
-                              name: widget.nameController,
-                              email: widget.emailController,
+                              nameController : widget.nameController,
+                              emailConttoller: widget.emailController,
                               selectedGender: widget.selectedGender,
                             ),
                           ),
@@ -150,7 +157,8 @@ class _NumberState extends State<Number> {
                         padding: EdgeInsets.symmetric(horizontal: 7.0),
                         child: Text(
                           "Or with",
-                          style: TextStyle(color: Color(0xfffffffff), fontSize: 13),
+                          style: TextStyle(
+                              color: Color(0xfffffffff), fontSize: 13),
                         ),
                       ),
                       Expanded(child: Divider(color: Colors.white)),
@@ -160,7 +168,8 @@ class _NumberState extends State<Number> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Already have an account? ", style: Interstyle.copyWith(fontSize: 15)),
+                      Text("Already have an account? ",
+                          style: Interstyle.copyWith(fontSize: 15)),
                       GestureDetector(
                         onTap: () {
                           // Navigasi ke halaman pendaftaran
@@ -171,7 +180,8 @@ class _NumberState extends State<Number> {
                             ),
                           );
                         },
-                        child: Text("Log In", style: Interrrstyle.copyWith(fontSize: 15)),
+                        child: Text("Log In",
+                            style: Interrrstyle.copyWith(fontSize: 15)),
                       ),
                     ],
                   ),

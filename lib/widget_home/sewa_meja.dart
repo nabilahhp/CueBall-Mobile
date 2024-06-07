@@ -4,13 +4,15 @@ import 'package:mobile_bl/api/meja.dart'; // Import model Meja
 import 'package:mobile_bl/api/jam_sewa.dart'; // Import model JamSewa
 import 'package:mobile_bl/api/api_service.dart'; // Import API service
 import 'package:mobile_bl/api/api_servicemeja.dart';
+import 'package:mobile_bl/api/api_servicesewa.dart';
 import 'package:mobile_bl/widget_home/navigationbar.dart'; // Import API service
 
 class DialogMeja1 extends StatefulWidget {
   final String idUser;
   final Meja meja;
 
-  const DialogMeja1({Key? key, required this.meja, required this.idUser}) : super(key: key);
+  const DialogMeja1({Key? key, required this.meja, required this.idUser})
+      : super(key: key);
 
   @override
   State<DialogMeja1> createState() => _DialogMejaState();
@@ -23,35 +25,64 @@ class _DialogMejaState extends State<DialogMeja1> {
   late Map<String, Color> _timeButtonColors;
   List<String> _selectedTimes = [];
   bool _isDateSelected = false;
-  
+  int _totalBooked = 0;
 
-
- void _bookMeja() async {
-  try {
-    await ApiServicemeja().bookMeja(
-      widget.meja.idmeja,
-      widget.idUser,
-      _selectedTimes,
-      _selectedDate,
-      'belum dibayar', // Mengirim status "belum dibayar"
-    );
-    // Pemanggilan metode untuk mengarahkan ke halaman aktivitas
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => NavigationMenu(selectedIndex: 1, idUser: widget.idUser)),
-    );
-    // Tampilkan pesan sukses atau lakukan tindakan lain setelah booking berhasil
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Booking successful')),
-    );
-  } catch (e) {
-    print('Error booking meja: $e');
-    // Tampilkan pesan error
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Booking failed')),
-    );
+  void _bookMeja() async {
+    try {
+      await ApiServicemeja().bookMeja(
+        widget.meja.idmeja,
+        widget.idUser,
+        _selectedTimes,
+        _selectedDate,
+        'belum dibayar',
+      );
+      // Pemanggilan metode untuk mengarahkan ke halaman aktivitas
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+            builder: (context) =>
+                NavigationMenu(selectedIndex: 1, idUser: widget.idUser)),
+      );
+      // Tampilkan pesan sukses atau lakukan tindakan lain setelah booking berhasil
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Booking successful')),
+      );
+    } catch (e) {
+      print('Error booking meja: $e');
+      // Tampilkan pesan error
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Booking failed')),
+      );
+    }
   }
-}
 
+  void _bookSewa() async {
+    try {
+      await ApiServicesewameja().bookSewa(
+        widget.meja.idmeja,
+        widget.idUser,
+        _selectedDate,
+        widget.meja.harga,
+        _totalBooked.toString(),
+        'belum dikonfirmasi',
+      );
+      // Pemanggilan metode untuk mengarahkan ke halaman aktivitas
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+            builder: (context) =>
+                NavigationMenu(selectedIndex: 1, idUser: widget.idUser)),
+      );
+      // Tampilkan pesan sukses atau lakukan tindakan lain setelah booking berhasil
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Booking Sewa successful')),
+      );
+    } catch (e) {
+      print('Error booking meja: $e');
+      // Tampilkan pesan error
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Booking Sewa failed')),
+      );
+    }
+  }
 
   @override
   void initState() {
@@ -62,6 +93,7 @@ class _DialogMejaState extends State<DialogMeja1> {
     _timeButtonColors = {}; // Initialize _timeButtonColors
     _fetchBookedTimes();
     print(widget.idUser);
+    _totalBooked.toString();
   }
 
   void _fetchBookedTimes() async {
@@ -129,7 +161,7 @@ class _DialogMejaState extends State<DialogMeja1> {
             top: 200,
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: 800,
+              height: 600,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -137,120 +169,127 @@ class _DialogMejaState extends State<DialogMeja1> {
                   topRight: Radius.circular(25),
                 ),
               ),
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 45),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 210),
-                    Text(
-                      widget.meja.nm,
-                      style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 24,
-                        color: Color(0xffFBBC05),
+              child: SingleChildScrollView(
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 45),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 210),
+                      Text(
+                        widget.meja.nm,
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 24,
+                          color: Color(0xffFBBC05),
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 7),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          widget.meja.ket.isNotEmpty
-                              ? widget.meja.ket
-                              : "Lorem ipsum dolor sit amet.",
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            color: Color(0xff000000),
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              widget.meja.harga,
-                              style: GoogleFonts.inter(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xffFBBC05),
-                              ),
-                            ),
-                            Text(
-                              "/Hour",
-                              style: GoogleFonts.inter(
-                                fontSize: 14,
-                                color: Color(0xff000000),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 15),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Wrap(
-                        spacing: 10,
-                        runSpacing: 8,
+                      SizedBox(height: 7),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          buildTimeButton("12:00"),
-                          buildTimeButton("13:00"),
-                          buildTimeButton("14:00"),
-                          buildTimeButton("15:00"),
-                          buildTimeButton("16:00"),
-                          buildTimeButton("17:00"),
-                          buildTimeButton("18:00"),
-                          buildTimeButton("19:00"),
-                          buildTimeButton("20:00"),
-                          buildTimeButton("21:00"),
-                          buildTimeButton("22:00"),
-                          buildTimeButton("23:00"),
-                          buildTimeButton("24:00"),
+                          Text(
+                            widget.meja.ket.isNotEmpty
+                                ? widget.meja.ket
+                                : "Lorem ipsum dolor sit amet.",
+                            style: GoogleFonts.inter(
+                              fontSize: 14,
+                              color: Color(0xff000000),
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                widget.meja.harga,
+                                style: GoogleFonts.inter(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xffFBBC05),
+                                ),
+                              ),
+                              Text(
+                                "/Hour",
+                                style: GoogleFonts.inter(
+                                  fontSize: 14,
+                                  color: Color(0xff000000),
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(20),
-                      child: TextField(
-                        controller: _dateController,
-                        decoration: InputDecoration(
-                          labelText: 'DATE',
-                          filled: true,
-                          prefixIcon: Icon(Icons.calendar_today),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xffFBBC05)),
-                          ),
-                        ),
-                        readOnly: true,
-                        onTap: () {
-                          _selectDate();
-                        },
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Container(
-                      width: double.infinity,
-                      height: 45,
-                      child: ElevatedButton(
-                        onPressed: _isDateSelected && _selectedTimes.isNotEmpty
-                            ? _bookMeja
-                            : null,
-                        child: Text(
-                          "Booking Now",
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xffFBBC05),
+                      SizedBox(height: 15),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Wrap(
+                          spacing: 10,
+                          runSpacing: 8,
+                          children: [
+                            buildTimeButton("12:00"),
+                            buildTimeButton("13:00"),
+                            buildTimeButton("14:00"),
+                            buildTimeButton("15:00"),
+                            buildTimeButton("16:00"),
+                            buildTimeButton("17:00"),
+                            buildTimeButton("18:00"),
+                            buildTimeButton("19:00"),
+                            buildTimeButton("20:00"),
+                            buildTimeButton("21:00"),
+                            buildTimeButton("22:00"),
+                            buildTimeButton("23:00"),
+                            buildTimeButton("24:00"),
+                          ],
                         ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsets.all(20),
+                        child: TextField(
+                          controller: _dateController,
+                          decoration: InputDecoration(
+                            labelText: 'DATE',
+                            filled: true,
+                            prefixIcon: Icon(Icons.calendar_today),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xffFBBC05)),
+                            ),
+                          ),
+                          readOnly: true,
+                          onTap: () {
+                            _selectDate();
+                          },
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                        width: double.infinity,
+                        height: 45,
+                        child: ElevatedButton(
+                          onPressed:
+                              _isDateSelected && _selectedTimes.isNotEmpty
+                                  ? () {
+                                    _bookMeja();
+                                    _bookSewa();
+                                  }
+                                  : null,
+                          child: Text(
+                            "Booking Now",
+                            style: GoogleFonts.inter(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xffFBBC05),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 30),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -325,40 +364,45 @@ class _DialogMejaState extends State<DialogMeja1> {
   }
 
   void _toggleTimeSelection(String time) {
-    setState(() {
-      // Check if time has been previously selected
-      bool wasSelected = _selectedTimes.contains(time);
+  setState(() {
+    // Check if time has been previously selected
+    bool wasSelected = _selectedTimes.contains(time);
+    int harga = double.parse(widget.meja.harga).toInt();
 
-      // If previously selected, remove from list
-      if (wasSelected) {
-        _selectedTimes.remove(time);
-        print('Time $time deselected');
-      } else {
-        // If not previously selected, add to list
-        _selectedTimes.add(time);
-        print('Time $time selected');
-      }
+    // If previously selected, remove from list and subtract the cost
+    if (wasSelected) {
+      _selectedTimes.remove(time);
+      _totalBooked -= harga; // Operasi pengurangan
+      print('Time $time deselected. Total cost reduced by $harga');
+    } else {
+      // If not previously selected, add to list and add the cost
+      _selectedTimes.add(time);
+      _totalBooked += harga; // Operasi penjumlahan
+      print('Time $time selected. Total cost increased by $harga');
+    }
 
-      // Update button color based on time selection status
-      bool isBookedOnSelectedDate =
-          _isDateSelected && _bookedTimes.any((jamSewa) => jamSewa.jam == time);
-      bool isSelected = _selectedTimes.contains(time);
-      Color buttonColor;
-      if (!_isDateSelected) {
-        buttonColor = Colors.grey;
-      } else if (isBookedOnSelectedDate) {
-        buttonColor = Colors.grey;
-      } else {
-        buttonColor = isSelected ? Colors.blue : Color(0xffFBBC05);
-      }
+    // Update button color based on time selection status
+    bool isBookedOnSelectedDate =
+        _isDateSelected && _bookedTimes.any((jamSewa) => jamSewa.jam == time);
+    bool isSelected = _selectedTimes.contains(time);
+    Color buttonColor;
+    if (!_isDateSelected) {
+      buttonColor = Colors.grey;
+    } else if (isBookedOnSelectedDate) {
+      buttonColor = Colors.grey;
+    } else {
+      buttonColor = isSelected ? Colors.blue : Color(0xffFBBC05);
+    }
 
-      // Save button color in a map or list
-      _timeButtonColors[time] = buttonColor;
+    // Save button color in a map or list
+    _timeButtonColors[time] = buttonColor;
 
-      print('Selected times: $_selectedTimes');
-      print('Time $time isSelected: $isSelected');
-    });
-  }
+    print('Selected times: $_selectedTimes');
+    print('Time $time isSelected: $isSelected');
+    print('Total booked: $_totalBooked');
+  });
+}
+
 
   Future<void> _selectDate() async {
     DateTime? pickedDate = await showDatePicker(

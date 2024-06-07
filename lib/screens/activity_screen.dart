@@ -66,7 +66,7 @@ class _ActivityPageState extends State<ActivityPage> {
         : allActivities
             .where((activity) =>
                 activity['status'] ==
-                (_selectedTab == 1 ? 'belum dibayar' : 'Sudah Bayar'))
+                (_selectedTab == 1 ? 'Belum Dikonfirmasi' : 'Dikonfirmasi'))
             .toList();
 
     return Scaffold(
@@ -129,7 +129,7 @@ class _ActivityPageState extends State<ActivityPage> {
                     ),
                     Expanded(
                       child: ChoiceChip(
-                        label: Text('belum dibayar'),
+                        label: Text('Belum Dikonfirmasi'),
                         selected: _selectedTab == 1,
                         onSelected: (bool selected) {
                           setState(() {
@@ -140,7 +140,7 @@ class _ActivityPageState extends State<ActivityPage> {
                     ),
                     Expanded(
                       child: ChoiceChip(
-                        label: Text('Sudah Bayar'),
+                        label: Text('Dikonfirmasi'),
                         selected: _selectedTab == 2,
                         onSelected: (bool selected) {
                           setState(() {
@@ -190,7 +190,7 @@ class _ActivityPageState extends State<ActivityPage> {
             Text(price,
                 style: GoogleFonts.poppins(
                     color: Colors.orange, fontWeight: FontWeight.bold)),
-            if (status == 'belum dibayar')
+            if (status == 'Belum Dikonfirmasi')
               TextButton(
                 onPressed: () {
                   Navigator.push(
@@ -201,13 +201,13 @@ class _ActivityPageState extends State<ActivityPage> {
                   );
                 },
                 child: Text(
-                  'belum dibayar',
+                  'Belum Dikonfirmasi',
                   style: GoogleFonts.poppins(color: Colors.red),
                 ),
               ),
-            if (status == 'Sudah Bayar')
+            if (status == 'DIkonfirmasi')
               Text(
-                'Sudah Bayar',
+                'Dikonfirmasi',
                 style: GoogleFonts.poppins(color: Colors.green),
               ),
           ],

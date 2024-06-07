@@ -3,31 +3,30 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:mobile_bl/main.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_bl/main.dart';
 import 'package:path/path.dart' as path;
 import 'constans.dart';
 import 'password/pass.dart';
 
 class Profiladd extends StatefulWidget {
   final String phoneNumber;
-  final String name;
-  final String email;
+  final String nameController;
+  final String emailConttoller;
   final String selectedGender;
   final String address;
-  final File? imageFile; // Tambahkan parameter imageFile
-  final Uint8List? webImage; // Tambahkan parameter webImage
+  final File? imageFile;
+  final Uint8List? webImage;
 
   const Profiladd({
     Key? key,
     required this.phoneNumber,
-    required this.name,
-    required this.email,
+    required this.nameController,
+    required this.emailConttoller,
     required this.selectedGender,
     required this.address,
-    this.imageFile, // Tambahkan parameter imageFile
-    this.webImage, // Tambahkan parameter webImage
+    this.imageFile,
+    this.webImage,
   }) : super(key: key);
 
   @override
@@ -38,49 +37,63 @@ class _ProfiladdState extends State<Profiladd> {
   File? _image;
   Uint8List? _webImage;
 
-  Future<void> _uploadImage(BuildContext context) async {
-  try {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.image,
-    );
-
-    if (result != null) {
-      if (kIsWeb) {
-        setState(() {
-          _webImage = result.files.first.bytes;
-        });
-      } else {
-        File file = File(result.files.single.path!);
-        final directory = await getApplicationDocumentsDirectory();
-        final String newPath = path.join(directory.path, 'profile_image.png');
-
-        await file.copy(newPath);
-
-        setState(() {
-          _image = File(newPath);
-        });
-
-        print('Image saved at $newPath');
-      }
-    } else {
-      print('User canceled the picker.');
-    }
-  } catch (e) {
-    print('Error picking image: $e');
-  }
-}
-
-
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+    // Log data ke konsol
     print('Phone Number: ${widget.phoneNumber}');
-    print('Name: ${widget.name}');
-    print('Email: ${widget.email}');
+    print('Name: ${widget.nameController}');
+    print('Email: ${widget.emailConttoller}');
     print('Selected Gender: ${widget.selectedGender}');
     print('Address: ${widget.address}');
     print('Image File: ${widget.imageFile}');
     print('Web Image: ${widget.webImage}');
+    // Inisialisasi gambar dari parameter widget jika ada
+    if (widget.imageFile != null) {
+      _image = widget.imageFile;
+    }
+    if (widget.webImage != null) {
+      _webImage = widget.webImage;
+    }
+  }
 
+  Future<void> _uploadImage(BuildContext context) async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.image,
+      );
+
+      if (result != null) {
+        if (kIsWeb) {
+          setState(() {
+            _webImage = result.files.first.bytes;
+          });
+        } else {
+          File file = File(result.files.single.path!);
+          final directory = Directory('lib/image');
+          if (!await directory.exists()) {
+            await directory.create(recursive: true);
+          }
+          final String newPath = path.join(directory.path, 'profile_image.png');
+
+          await file.copy(newPath);
+
+          setState(() {
+            _image = File(newPath);
+          });
+
+          print('Image saved at $newPath');
+        }
+      } else {
+        print('User canceled the picker.');
+      }
+    } catch (e) {
+      print('Error picking image: $e');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -158,11 +171,11 @@ class _ProfiladdState extends State<Profiladd> {
                             builder: (context) => CreatePass(
                               phoneNumber: widget.phoneNumber,
                               address: widget.address,
-                              name: widget.name,
-                              email: widget.email,
+                              name: widget.nameController,
+                              email: widget.emailConttoller,
                               selectedGender: widget.selectedGender,
-                              imageFile: widget.imageFile,
-                              webImage: widget.webImage,
+                              imageFile: _image,
+                              webImage: _webImage,
                             ),
                           ),
                         );

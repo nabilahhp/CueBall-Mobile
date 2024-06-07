@@ -21,12 +21,20 @@ if ($conn->connect_error) {
 $idUser = $_GET['iduser'];
 
 // Buat query untuk mengambil data aktivitas
-$sql = "SELECT sewa.iduser, meja.idmeja, meja.nm, meja.foto, sewa.harga, sewa.tot, jam_sewa.status
+// $sql = "SELECT sewa.iduser, meja.idmeja, meja.nm, meja.foto, sewa.harga, sewa.tot, sewa.status
+//         FROM sewa
+//         JOIN jam_sewa ON sewa.idmeja = jam_sewa.idmeja
+//         JOIN meja ON sewa.idmeja = meja.idmeja
+//         WHERE sewa.iduser = $idUser
+//         ORDER BY meja.idmeja DESC";
+$sql = "SELECT sewa.iduser, meja.idmeja, sewa.tot, sewa.status, sewa.harga, meja.nm, meja.foto
         FROM sewa
-        JOIN jam_sewa ON sewa.idmeja = jam_sewa.idmeja
         JOIN meja ON sewa.idmeja = meja.idmeja
-        WHERE sewa.iduser = $idUser
-        ORDER BY meja.idmeja DESC";
+        JOIN user ON sewa.iduser = user.id_user 
+        LEFT JOIN bayar ON sewa.idsewa = bayar.idsewa
+        WHERE sewa.iduser = '$idUser'";
+
+
 
 // Jalankan query
 $result = $conn->query($sql);
@@ -47,4 +55,3 @@ if ($result->num_rows > 0) {
 
 // Tutup koneksi database
 $conn->close();
-?>

@@ -21,27 +21,28 @@ $data = json_decode(file_get_contents('php://input'), true);
 // Tampilkan data untuk memeriksanya
 var_dump($data);
 
-$iduser = $data['idUser'];
 $idmeja = $data['idmeja'];
-$tanggal = $data['tanggal'];
-$harga = $data['harga'];
-$tot = $data['tot'];
+$iduser = $data['idUser'];
+$tanggal = $data['tanggal']; 
+$jam = $data['jam'];
 $status = $data['status'];
 
 // Insert data ke tabel
-$sql = "INSERT INTO sewa (iduser, idmeja, tgl_pesan, harga, tot, status) VALUES (?, ?, ?, ?, ?, ?)";
+$sql = "INSERT INTO jam_sewa (idmeja, iduser, tanggal, jam, status) VALUES (?, ?, ?, ?, ?)";
 $stmt = $conn->prepare($sql);
 if ($stmt) {
-
-  $stmt->bind_param("ssssss", $iduser, $idmeja, $tanggal, $harga, $tot, $status); // Ubah urutan tanggal dan jam
-  $stmt->execute();
-
+  foreach ($jam as $j) {
+    $stmt->bind_param("sssss", $idmeja, $iduser , $tanggal, $j, $status); // Ubah urutan tanggal dan jam
+    $stmt->execute();
+  }
+  
   $stmt->close();
   $conn->close();
-
-  echo json_encode(["message" => "Booking Sewa successful"]);
+  
+  echo json_encode(["message" => "Booking successful"]);
 } else {
   // Gagal menyiapkan statement, beri respon kesalahan
   http_response_code(500);
   echo json_encode(["message" => "Failed to prepare statement"]);
 }
+?>

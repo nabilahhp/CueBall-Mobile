@@ -257,6 +257,13 @@ class _PaymentTablePageState extends State<PaymentTablePage> {
                   color: Colors.grey[700],
                 ),
               ),
+              Text(
+                'Bila cantik', // Tambahkan keterangan "Bila cantik" di sini
+                style: GoogleFonts.poppins(
+                  fontSize: 14,
+                  color: Colors.grey[700],
+                ),
+              ),
             ],
           ),
         ],

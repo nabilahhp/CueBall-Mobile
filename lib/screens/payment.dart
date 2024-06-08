@@ -1,3 +1,4 @@
+// payment_page.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
@@ -29,8 +30,7 @@ class _PaymentPageState extends State<PaymentPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Menghitung total harga dari item
-    final double totalPrice = widget.items.fold(0, (sum, item) => sum + item.price);
+    final double totalPrice = widget.items.fold(0, (sum, item) => sum + item.price * item.quantity);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -107,7 +107,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 itemCount: widget.items.length,
                 itemBuilder: (context, index) {
                   final cartItem = widget.items[index];
-                  return _buildItem(context, cartItem.name, cartItem.price as double);
+                  return _buildItem(context, cartItem.name, cartItem.price, cartItem.image);
                 },
               ),
             ),
@@ -123,6 +123,36 @@ class _PaymentPageState extends State<PaymentPage> {
             ),
             SizedBox(height: 16),
             Text(
+              'Upload Payment Proof',
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(height: 8),
+            GestureDetector(
+              onTap: _pickImage,
+              child: Container(
+                height: 150,
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: _image != null
+                    ? Image.file(_image!, fit: BoxFit.cover)
+                    : Center(
+                        child: Text(
+                          'Tap to upload image',
+                          style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+              ),
+            ),
+            SizedBox(height: 16),
+            Text(
               'Payment Method',
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.bold,
@@ -131,8 +161,14 @@ class _PaymentPageState extends State<PaymentPage> {
             ),
             DropdownButtonFormField<String>(
               items: [
-                DropdownMenuItem(value: 'BCA', child: Text('BCA')),
-                DropdownMenuItem(value: 'BRI', child: Text('BRI')),
+                DropdownMenuItem(
+                  value: 'BCA',
+                  child: Text('BCA'),
+                ),
+                DropdownMenuItem(
+                  value: 'BRI',
+                  child: Text('BRI'),
+                ),
               ],
               onChanged: (value) {
                 setState(() {
@@ -140,82 +176,40 @@ class _PaymentPageState extends State<PaymentPage> {
                 });
               },
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: Colors.orange),
                 ),
-              ),
-              hint: Text('Choose Your Payment'),
-            ),
-            SizedBox(height: 16),
-            InkWell(
-              onTap: _pickImage,
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.orange),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  children: [
-                    Icon(Icons.upload_file, color: Colors.orange),
-                    SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        _image == null ? 'Choose File' : 'File Selected',
-                        style: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            if (_image != null) ...[
-              SizedBox(height: 8),
-              Image.file(
-                _image!,
-                height: 150,
-              ),
-            ],
-            SizedBox(height: 16),
-            Spacer(),
-            Text(
-              'Total (${widget.items.length} items) :',
-              style: GoogleFonts.poppins(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
-            Text(
-              'Rp ${totalPrice.toStringAsFixed(0)}',
-              style: GoogleFonts.poppins(
-                fontSize: 14,
-                color: Colors.orange,
               ),
             ),
             SizedBox(height: 16),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  backgroundColor: Colors.black,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: Text(
-                  'Pay',
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Total: Rp $totalPrice',
                   style: GoogleFonts.poppins(
-                    color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),
                 ),
-              ),
+                ElevatedButton(
+                  onPressed: () {
+                    // Implementasi logika pembayaran
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                  ),
+                  child: Text(
+                    'Pay Now',
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -223,35 +217,39 @@ class _PaymentPageState extends State<PaymentPage> {
     );
   }
 
-  Widget _buildItem(BuildContext context, String title, double price) {
+  Widget _buildItem(BuildContext context, String name, int price, String image) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.network(
-              'https://via.placeholder.com/50',
-              width: 50,
-              height: 50,
-              fit: BoxFit.cover,
+          Container(
+            height: 60,
+            width: 60,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.grey[200],
             ),
+            child: Image.asset(image),
           ),
-          SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              title,
-              style: GoogleFonts.poppins(
-                fontSize: 14,
+          SizedBox(width: 16),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                name,
+                style: GoogleFonts.poppins(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-          ),
-          Text(
-            'Rp ${price.toStringAsFixed(0)}',
-            style: GoogleFonts.poppins(
-              fontSize: 14,
-              color: Colors.orange,
-            ),
+              Text(
+                'Rp $price',
+                style: GoogleFonts.poppins(
+                  fontSize: 14,
+                  color: Colors.grey[700],
+                ),
+              ),
+            ],
           ),
         ],
       ),

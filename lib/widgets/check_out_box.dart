@@ -1,131 +1,66 @@
 // check_out_box.dart
 import 'package:flutter/material.dart';
-import 'package:mobile_bl/models/cart_item.dart';
-import 'package:mobile_bl/screens/payment.dart';
-import '../provider/cart_provider.dart';
-import '../constans.dart';
+import 'package:google_fonts/google_fonts.dart';
+import '../models/cart_item.dart';
 
 class CheckOutBox extends StatelessWidget {
   final List<CartItem> finalList;
+  final VoidCallback onCheckout;
 
-  const CheckOutBox({Key? key, required this.finalList}) : super(key: key);
+  const CheckOutBox({Key? key, required this.finalList, required this.onCheckout}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final provider = CartProvider.of(context);
+    double totalPrice = finalList.fold(0, (sum, item) => sum + item.price * item.quantity);
+
     return Container(
-      height: 300,
-      width: double.infinity,
+      padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(30),
-          topLeft: Radius.circular(30),
-        ),
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
       ),
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30),
-                borderSide: BorderSide.none,
-              ),
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: 5,
-                horizontal: 15,
-              ),
-              filled: true,
-              fillColor: kcontentColor,
-              hintText: "Masukkan Kode Diskon",
-              hintStyle: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: Colors.grey,
-              ),
-              suffixIcon: TextButton(
-                onPressed: () {},
-                child: const Text(
-                  "Terapkan",
-                  style: TextStyle(
-                    color: kprimaryColor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Subtotal",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey,
-                ),
-              ),
               Text(
-                "Rp ${provider.totalPrice()}",
-                style: const TextStyle(
+                'Total:',
+                style: GoogleFonts.poppins(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          const Divider(),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                "Total",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
               Text(
-                "Rp ${provider.totalPrice()}",
-                style: const TextStyle(
+                'Rp $totalPrice',
+                style: GoogleFonts.poppins(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
+                  color: Colors.orange,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PaymentPage(items: finalList),
-                ),
-              );
-            },
+            onPressed: onCheckout,
             style: ElevatedButton.styleFrom(
-              backgroundColor: kprimaryColor,
-              padding: const EdgeInsets.symmetric(vertical: 15),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
+              backgroundColor: Colors.orange,
             ),
-            child: const Center(
-              child: Text(
-                'Checkout',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+            child: Text(
+              'Checkout',
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: Colors.white,
               ),
             ),
           ),

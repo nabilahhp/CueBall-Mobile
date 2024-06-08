@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../provider/cart_provider.dart';
 import '../widgets/check_out_box.dart';
 import '../constans.dart';
+import 'payment.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -183,7 +184,17 @@ class _CartScreenState extends State<CartScreen> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: CheckOutBox(finalList: finalList),
+              child: CheckOutBox(
+                finalList: finalList,
+                onCheckout: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PaymentPage(items: finalList),
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),

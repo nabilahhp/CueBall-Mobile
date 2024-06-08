@@ -93,8 +93,8 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                   topLeft: Radius.circular(10),
                                   topRight: Radius.circular(10),
                                 ),
-                                child: Image.asset(
-                                  "lib/image/" + meja.foto,
+                                child: Image.network(
+                                  "http://localhost:8000/projek_api/image/" + meja.foto,
                                   width: 170,
                                   fit: BoxFit.cover,
                                 ),

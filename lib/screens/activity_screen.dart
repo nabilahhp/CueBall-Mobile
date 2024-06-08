@@ -66,7 +66,7 @@ class _ActivityPageState extends State<ActivityPage> {
         : allActivities
             .where((activity) =>
                 activity['status'] ==
-                (_selectedTab == 1 ? 'Belum Dikonfirmasi' : 'Dikonfirmasi'))
+                (_selectedTab == 1 ? 'Belum Bayar' : 'Dikonfirmasi'))
             .toList();
 
     return Scaffold(
@@ -129,7 +129,7 @@ class _ActivityPageState extends State<ActivityPage> {
                     ),
                     Expanded(
                       child: ChoiceChip(
-                        label: Text('Belum Dikonfirmasi'),
+                        label: Text('Belum Bayar'),
                         selected: _selectedTab == 1,
                         onSelected: (bool selected) {
                           setState(() {
@@ -190,7 +190,7 @@ class _ActivityPageState extends State<ActivityPage> {
             Text(price,
                 style: GoogleFonts.poppins(
                     color: Colors.orange, fontWeight: FontWeight.bold)),
-            if (status == 'Belum Dikonfirmasi')
+            if (status == 'Belum Bayar')
               TextButton(
                 onPressed: () {
                   Navigator.push(
@@ -201,7 +201,7 @@ class _ActivityPageState extends State<ActivityPage> {
                   );
                 },
                 child: Text(
-                  'Belum Dikonfirmasi',
+                  'Belum Bayar',
                   style: GoogleFonts.poppins(color: Colors.red),
                 ),
               ),

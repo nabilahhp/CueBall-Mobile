@@ -1,36 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_bl/main.dart';
-import 'constans.dart';
-import 'profileadd.dart';
+import 'package:mobile_bl/register/number.dart';
+import '../constans.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-class Number extends StatefulWidget {
-  final String nameController;
-  final String emailController;
-  final String selectedGender;
-
-  const Number({
-    Key? key,
-    required this.nameController,
-    required this.emailController,
-    required this.selectedGender, // Mengubah tipe data menjadi String
-  }) : super(key: key);
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  _NumberState createState() => _NumberState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _NumberState extends State<Number> {
-  TextEditingController phoneNumberController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
-  @override
-  void initState() {
-    super.initState();
-    // Log data ke konsol
-    print('Name: ${widget.nameController}');
-    print('Email: ${widget.emailController}');
-    print('Selected Gender: ${widget.selectedGender}');
-  }
+class _RegisterPageState extends State<RegisterPage> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  String? selectedGender;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +34,7 @@ class _NumberState extends State<Number> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Contact & Address',
+                    'Create Account',
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w700,
                       fontSize: 35,
@@ -60,7 +43,7 @@ class _NumberState extends State<Number> {
                   ),
                   SizedBox(height: 11),
                   Text(
-                    "Your phone number and address? It helps us keep your profile updated.",
+                    "Welcome! Please sign up to continue exploring our platform.",
                     style: Interstyle.copyWith(fontSize: 15),
                   ),
                   SizedBox(height: 34),
@@ -68,7 +51,7 @@ class _NumberState extends State<Number> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Phone Number",
+                        "Name",
                         style: Interstyle.copyWith(fontSize: 14),
                       ),
                       SizedBox(height: 5),
@@ -79,10 +62,10 @@ class _NumberState extends State<Number> {
                           color: whiteColor,
                         ),
                         child: TextField(
-                          controller: phoneNumberController,
+                          controller: nameController,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: "Your Phone Number",
+                            hintText: "Your Name",
                             contentPadding: EdgeInsets.symmetric(
                               horizontal: 18,
                               vertical: 16,
@@ -92,7 +75,7 @@ class _NumberState extends State<Number> {
                       ),
                       SizedBox(height: 20),
                       Text(
-                        "Address",
+                        "Email",
                         style: Interstyle.copyWith(fontSize: 14),
                       ),
                       SizedBox(height: 5),
@@ -103,10 +86,50 @@ class _NumberState extends State<Number> {
                           color: whiteColor,
                         ),
                         child: TextField(
-                          controller: addressController,
+                          controller: emailController,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: "Your Address",
+                            hintText: "Your Email",
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 18,
+                              vertical: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        "Gender",
+                        style: Interstyle.copyWith(fontSize: 14),
+                      ),
+                      SizedBox(height: 5),
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: whiteColor,
+                        ),
+                        child: DropdownButtonFormField<String>(
+                          value: selectedGender,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectedGender = newValue;
+                            });
+                          },
+                          items: ['Male', 'Female']
+                              .map<DropdownMenuItem<String>>(
+                                (String value) => DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                          decoration: InputDecoration(
+                            hintText: "Choose Your Gender",
+                            border: InputBorder.none,
                             contentPadding: EdgeInsets.symmetric(
                               horizontal: 18,
                               vertical: 16,
@@ -122,23 +145,8 @@ class _NumberState extends State<Number> {
                     height: 45,
                     child: ElevatedButton(
                       onPressed: () {
-                        // Logging the values to the console
-                        print('Phone Number: ${phoneNumberController.text}');
-                        print('Address: ${addressController.text}');
-
-                        // Navigasi ke halaman selanjutnya dengan membawa data nomor telepon dan alamat
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Profiladd(
-                              phoneNumber: phoneNumberController.text,
-                              address: addressController.text,
-                              nameController : widget.nameController,
-                              emailConttoller: widget.emailController,
-                              selectedGender: widget.selectedGender,
-                            ),
-                          ),
-                        );
+                        // Lanjutkan ke langkah berikutnya
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Number(nameController: nameController.text,emailController: emailController.text, selectedGender: selectedGender ?? "")));
                       },
                       child: Text(
                         "Next",
@@ -157,8 +165,7 @@ class _NumberState extends State<Number> {
                         padding: EdgeInsets.symmetric(horizontal: 7.0),
                         child: Text(
                           "Or with",
-                          style: TextStyle(
-                              color: Color(0xfffffffff), fontSize: 13),
+                          style: TextStyle(color: Color(0xfffffffff), fontSize: 13),
                         ),
                       ),
                       Expanded(child: Divider(color: Colors.white)),
@@ -168,23 +175,15 @@ class _NumberState extends State<Number> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Already have an account? ",
-                          style: Interstyle.copyWith(fontSize: 15)),
+                      Text("Already have an account? ", style: Interstyle.copyWith(fontSize: 15)),
                       GestureDetector(
                         onTap: () {
-                          // Navigasi ke halaman pendaftaran
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginPage(),
-                            ),
-                          );
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
                         },
-                        child: Text("Log In",
-                            style: Interrrstyle.copyWith(fontSize: 15)),
+                        child: Text("Log In", style: Interrrstyle.copyWith(fontSize: 15)),
                       ),
                     ],
-                  ),
+                  )
                 ],
               ),
             ),

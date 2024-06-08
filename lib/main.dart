@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_bl/password/forgot.dart';
+import 'package:mobile_bl/register/RegisterPage.dart';
 import 'package:mobile_bl/widget_home/navigationbar.dart';
 import 'package:mobile_bl/api/user_provider.dart';
 import 'package:mobile_bl/api/user.dart';
 import 'constans.dart';
-import 'RegisterPage.dart';
 import 'hidden_textfield.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;

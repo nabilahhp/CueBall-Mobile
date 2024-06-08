@@ -9,8 +9,9 @@ class CartItem {
   final int price;
   final int quantity;
   final String image;
+  final String description;
 
-  CartItem({required this.name, required this.price, required this.quantity, required this.image});
+  CartItem({required this.name, required this.price, required this.quantity, required this.image,  required this.description});
 }
 
 class PaymentTablePage extends StatefulWidget {
@@ -115,7 +116,7 @@ class _PaymentTablePageState extends State<PaymentTablePage> {
                 itemCount: widget.items.length,
                 itemBuilder: (context, index) {
                   final cartItem = widget.items[index];
-                  return _buildItem(context, cartItem.name, cartItem.price, cartItem.quantity, cartItem.image);
+                  return _buildItem(context, cartItem.name, cartItem.price, cartItem.quantity, cartItem.image, cartItem.description);
                 },
               ),
             ),
@@ -225,7 +226,7 @@ class _PaymentTablePageState extends State<PaymentTablePage> {
     );
   }
 
-  Widget _buildItem(BuildContext context, String name, int price, int quantity, String image) {
+  Widget _buildItem(BuildContext context, String name, int price, int quantity,  String image, String description) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
@@ -251,14 +252,14 @@ class _PaymentTablePageState extends State<PaymentTablePage> {
                 ),
               ),
               Text(
-                'Rp $price x $quantity',
+                'Rp $price',
                 style: GoogleFonts.poppins(
                   fontSize: 14,
                   color: Colors.grey[700],
                 ),
               ),
               Text(
-                'Bila cantik', // Tambahkan keterangan "Bila cantik" di sini
+                '$description', // Tambahkan keterangan "Bila cantik" di sini
                 style: GoogleFonts.poppins(
                   fontSize: 14,
                   color: Colors.grey[700],

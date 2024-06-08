@@ -27,9 +27,9 @@ Future<List<Map<String, dynamic>>> fetchActivities(String idUser) async {
 
       return {
         'title': item['nm'], // Sesuaikan dengan struktur data di API
-        'description': 'Total: ${item['tot']}', // Deskripsi statis, bisa diganti dengan data dari API jika ada
+        'description': 'Jam Main: ${item['jam_sewa']}', // Deskripsi statis, bisa diganti dengan data dari API jika ada
         'imagePath': 'lib/image/${item['foto']}', // Sesuaikan dengan struktur data di API
-        'price': item['harga'], // Sesuaikan dengan struktur data di API
+        'price': item['tot'], // Sesuaikan dengan struktur data di API
         'status': item['status'], // Sesuaikan dengan struktur data di API
       };
     }).toList();
@@ -204,6 +204,7 @@ class _ActivityPageState extends State<ActivityPage> {
                                 price: int.parse(price),
                                 quantity: 1,
                                 image: imagePath,
+                                description: description,
                               )
                             ])), // Sertakan item yang belum dibayar
                   );

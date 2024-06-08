@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 
+import 'package:mobile_bl/screens/payment_table.dart';
+
 class ActivityPage extends StatefulWidget {
   final String idUser;
 
@@ -37,7 +39,6 @@ Future<List<Map<String, dynamic>>> fetchActivities(String idUser) async {
     throw Exception('Failed to load activities');
   }
 }
-
 
 class _ActivityPageState extends State<ActivityPage> {
   int _selectedTab = 0;
@@ -196,8 +197,15 @@ class _ActivityPageState extends State<ActivityPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => PaymentPage(
-                            idUser: widget.idUser)), // Sertakan nilai idUser
+                        builder: (context) => PaymentTablePage(
+                            items: [
+                              CartItem(
+                                name: title,
+                                price: int.parse(price),
+                                quantity: 1,
+                                image: imagePath,
+                              )
+                            ])), // Sertakan item yang belum dibayar
                   );
                 },
                 child: Text(
@@ -216,30 +224,3 @@ class _ActivityPageState extends State<ActivityPage> {
     );
   }
 }
-
-class PaymentPage extends StatelessWidget {
-  final String idUser;
-
-  const PaymentPage({Key? key, required this.idUser}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Payment Page'),
-      ),
-      body: Center(
-        child: Text('This is the payment page for user: $idUser'),
-      ),
-    );
-  }
-}
-
-void onLoginSuccess(String idUser) {
-  runApp(MaterialApp(
-    home: ActivityPage(idUser: idUser),
-  ));
-}
-
-void handleLoginSuccess(String idUser) {
-  onLoginSuccess(idUser);}

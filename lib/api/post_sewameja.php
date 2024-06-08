@@ -18,31 +18,49 @@ if ($conn->connect_error) {
 
 // Ambil data dari POST request
 $data = json_decode(file_get_contents('php://input'), true);
-// Tampilkan data untuk memeriksanya
-var_dump($data);
 
 $idmeja = $data['idmeja'];
 $iduser = $data['idUser'];
 $tanggal = $data['tanggal']; 
 $jam = $data['jam'];
-$status = $data['status'];
+$status1 = $data['status1'];
+$harga = $data['harga'];
+$tot = $data['tot'];
+$status2 = $data['status2'];
 
-// Insert data ke tabel
-$sql = "INSERT INTO jam_sewa (idmeja, iduser, tanggal, jam, status) VALUES (?, ?, ?, ?, ?)";
-$stmt = $conn->prepare($sql);
-if ($stmt) {
-  foreach ($jam as $j) {
-    $stmt->bind_param("sssss", $idmeja, $iduser , $tanggal, $j, $status); // Ubah urutan tanggal dan jam
-    $stmt->execute();
+// Sisipkan data ke tabel sewa
+$sql_sewa = "INSERT INTO sewa (idmeja, iduser, tgl_pesan, harga, tot, status) VALUES (?, ?, ?, ?, ?, ?)";
+$stmt_sewa = $conn->prepare($sql_sewa);
+if ($stmt_sewa) {
+  $stmt_sewa->bind_param("ssssss", $idmeja, $iduser , $tanggal, $harga, $tot, $status2);
+  $stmt_sewa->execute();
+
+  // Ambil ID yang dihasilkan dari operasi penyisipan
+  $id_sewa = $stmt_sewa->insert_id;
+
+  $stmt_sewa->close();
+
+  // Sisipkan data ke tabel jam_sewa menggunakan ID yang dihasilkan dari tabel sewa
+  $sql_jam_sewa = "INSERT INTO jam_sewa (idsewa, idmeja, iduser, tanggal, jam, status) VALUES (?, ?, ?, ?, ?, ?)";
+  $stmt_jam_sewa = $conn->prepare($sql_jam_sewa);
+  if ($stmt_jam_sewa) {
+    foreach ($jam as $j) {
+      $stmt_jam_sewa->bind_param("ssssss", $id_sewa, $idmeja, $iduser , $tanggal, $j, $status1);
+      $stmt_jam_sewa->execute();
+    }
+
+    $stmt_jam_sewa->close();
+    $conn->close();
+
+    echo json_encode(["message" => "Booking successful"]);
+  } else {
+    // Gagal menyiapkan statement untuk penyisipan ke tabel jam_sewa
+    http_response_code(500);
+    echo json_encode(["message" => "Failed to prepare statement for jam_sewa"]);
   }
-  
-  $stmt->close();
-  $conn->close();
-  
-  echo json_encode(["message" => "Booking successful"]);
 } else {
-  // Gagal menyiapkan statement, beri respon kesalahan
+  // Gagal menyiapkan statement untuk penyisipan ke tabel sewa
   http_response_code(500);
-  echo json_encode(["message" => "Failed to prepare statement"]);
+  echo json_encode(["message" => "Failed to prepare statement for sewa"]);
 }
 ?>

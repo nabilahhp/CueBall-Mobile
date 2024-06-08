@@ -25,10 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $hp = $_POST['hp'] ?? '';
     $jenisKelamin = $_POST['jenis_kelamin'] ?? '';
     $alamat = $_POST['alamat'] ?? '';
-    $foto = $_POST['foto'] ?? '';
 
     // Periksa apakah data yang dibutuhkan telah diberikan
-    if (empty($email) || empty($password) || empty($namaLengkap) || empty($hp) || empty($jenisKelamin) || empty($alamat) || empty($foto)) {
+    if (empty($email) || empty($password) || empty($namaLengkap) || empty($hp) || empty($jenisKelamin) || empty($alamat)) {
         // Kirim respons JSON jika data tidak lengkap
         $response = array("success" => false, "message" => "Email, password, nama lengkap, hp, jenis kelamin, alamat, dan foto diperlukan");
         echo json_encode($response);
@@ -39,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     // Query untuk menyimpan data pengguna ke dalam tabel pengguna
-    $sql = "INSERT INTO user (email, password, nama_lengkap, hp, jenis_kelamin, alamat, foto) VALUES ('$email', '$hashedPassword', '$namaLengkap', '$hp', '$jenisKelamin', '$alamat', '$foto')";
+    $sql = "INSERT INTO user (email, password, nama_lengkap, hp, jenis_kelamin, alamat) VALUES ('$email', '$hashedPassword', '$namaLengkap', '$hp', '$jenisKelamin', '$alamat')";
 
     if ($conn->query($sql) === TRUE) {
         // Jika penyimpanan berhasil, kirim respons JSON ke klien

@@ -4,6 +4,7 @@ import 'package:mobile_bl/widget_home/detail_page.dart';
 import 'package:mobile_bl/api/meja.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class CategoriesWidget extends StatefulWidget {
   final String idUser;
@@ -17,13 +18,25 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
   late Future<List<Meja>> futureMeja;
 
   Future<List<Meja>> fetchMeja() async {
-    var response = await http.get(Uri.parse('http://localhost:8000/projek_api/get_meja.php'));
+    print('Fetching data from server...');
+
+    var response = await http.get(Uri.parse('http://cuebilliard.my.id/projek_api/get_meja.php'));
+
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
-      return jsonResponse.map((data) => Meja.fromJson(data)).toList();
+      print('JSON Response: $jsonResponse');
+
+      List<Meja> mejaList =
+          jsonResponse.map((data) => Meja.fromJson(data)).toList();
+      print('Parsed Meja List: $mejaList');
+
+      return mejaList;
     } else {
-      throw Exception('Failed to load makanan');
+      print('Failed to load data');
+      throw Exception('Failed to load meja');
     }
   }
 
@@ -59,7 +72,8 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => DetailPage(meja: meja, idUser: widget.idUser),
+                            builder: (context) =>
+                                DetailPage(meja: meja, idUser: widget.idUser),
                           ),
                         );
                       },
@@ -93,10 +107,16 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                   topLeft: Radius.circular(10),
                                   topRight: Radius.circular(10),
                                 ),
-                                child: Image.network(
-                                  "http://localhost:8000/projek_api/image/" + meja.foto,
+                                child: CachedNetworkImage(
+                                  imageUrl:
+                                      "http://cuebilliard.my.id/projek_api/image/${meja.foto}",
                                   width: 170,
+                                  height: 110,
                                   fit: BoxFit.cover,
+                                  placeholder: (context, url) =>
+                                      CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) =>
+                                      Icon(Icons.error),
                                 ),
                               ),
                             ),
@@ -123,7 +143,9 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                     ),
                                     SizedBox(height: 5),
                                     Text(
-                                      meja.ket.isNotEmpty ? meja.ket : "Deskripsi Kosong",
+                                      meja.ket.isNotEmpty
+                                          ? meja.ket
+                                          : "Deskripsi Kosong",
                                       style: GoogleFonts.inter(
                                         fontSize: 9,
                                         color: Color(0xff121212),

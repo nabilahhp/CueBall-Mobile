@@ -254,15 +254,15 @@ class _PaymentTablePageState extends State<PaymentTablePage> {
               ),
             ),
             SizedBox(height: 16),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Notes',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: Colors.orange),
-                ),
-              ),
-            ),
+            // TextField(
+            //   decoration: InputDecoration(
+            //     hintText: 'Notes',
+            //     border: OutlineInputBorder(
+            //       borderRadius: BorderRadius.circular(8),
+            //       borderSide: BorderSide(color: Colors.orange),
+            //     ),
+            //   ),
+            // ),
             SizedBox(height: 16),
             Text(
               'Upload Payment Proof',

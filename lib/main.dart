@@ -58,7 +58,7 @@ class LoginPage extends StatelessWidget {
 
   try {
     final response = await http.post(
-      Uri.parse('http://localhost:8000/projek_api/get_user.php'),
+      Uri.parse('http://cuebilliard.my.id/projek_api/get_user.php'),
       body: {'email': email, 'password': password},
     );
 

@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ApiServicemeja {
-  final String baseUrl = 'http://localhost:8000/projek_api/post_sewameja.php'; 
+  final String baseUrl = 'http://cuebilliard.my.id/projek_api/post_sewameja.php'; 
 
   Future<void> bookMeja(String idMeja, String idUser, List<String> jam, DateTime tanggal, String status1, String harga, String tot, String status2) async {
     final url = Uri.parse(baseUrl);

@@ -43,7 +43,7 @@ class _DialogMejaState extends State<DialogMeja1> {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
             builder: (context) =>
-                NavigationMenu(selectedIndex: 1, idUser: widget.idUser)),
+                NavigationMenu(selectedIndex: 1, idUser: widget.idUser,)),
       );
       // Tampilkan pesan sukses atau lakukan tindakan lain setelah booking berhasil
       ScaffoldMessenger.of(context).showSnackBar(
@@ -356,7 +356,7 @@ class _DialogMejaState extends State<DialogMeja1> {
 
     // Update button color based on time selection status
     bool isBookedOnSelectedDate =
-        _isDateSelected && _bookedTimes.any((jamSewa) => jamSewa.jam == time);
+        _isDateSelected && _bookedTimes.any((jamSewa) => jamSewa.jam == time && jamSewa.status == "sudah dibayar");
     bool isSelected = _selectedTimes.contains(time);
     Color buttonColor;
     if (!_isDateSelected) {

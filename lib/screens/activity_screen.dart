@@ -15,7 +15,7 @@ class ActivityPage extends StatefulWidget {
 }
 
 Future<List<Map<String, dynamic>>> fetchActivities(String idUser) async {
-  final response = await http.get(Uri.parse('http://localhost:8000/projek_api/get_activity.php?iduser=$idUser'));
+  final response = await http.get(Uri.parse('http://cuebilliard.my.id/projek_api/get_activity.php?iduser=$idUser'));
 
   if (response.statusCode == 200) {
     List<dynamic> jsonResponse = json.decode(response.body);
@@ -28,9 +28,10 @@ Future<List<Map<String, dynamic>>> fetchActivities(String idUser) async {
       return {
         'title': item['nm'], // Sesuaikan dengan struktur data di API
         'description': 'Jam Main: ${item['jam_sewa']}', // Deskripsi statis, bisa diganti dengan data dari API jika ada
-        'imagePath': 'lib/image/${item['foto']}', // Sesuaikan dengan struktur data di API
+        'imagePath': 'http://cuebilliard.my.id/projek_api/image/${item['foto']}', // Sesuaikan dengan struktur data di API
         'price': item['tot'], // Sesuaikan dengan struktur data di API
-        'status': item['status'], // Sesuaikan dengan struktur data di API
+        'status': item['status'], // Sesuaikan dengan struktur data di API // Sesuaikan dengan struktur data di API
+        'idsewa': item['idsewa'], // Sesuaikan dengan struktur data di API // Sesuaikan dengan struktur data di API
       };
     }).toList();
     print('Fetched activities: $activities'); // Tambahkan print statement untuk daftar kegiatan yang diambil
@@ -60,6 +61,8 @@ class _ActivityPageState extends State<ActivityPage> {
 
   @override
   Widget build(BuildContext context) {
+    print('ID User: ${widget.idUser}');
+
     final screenWidth = MediaQuery.of(context).size.width;
 
     List<Map<String, dynamic>> displayedActivities = _selectedTab == 0
@@ -72,7 +75,7 @@ class _ActivityPageState extends State<ActivityPage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.orange,
         elevation: 0,
         title: SizedBox(
           width: double.infinity,
@@ -154,20 +157,22 @@ class _ActivityPageState extends State<ActivityPage> {
                 ),
                 SizedBox(height: screenWidth * 0.02),
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: displayedActivities.length,
-                    itemBuilder: (context, index) {
-                      return _buildActivityCard(
-                        context,
-                        displayedActivities[index]['title'],
-                        displayedActivities[index]['description'],
-                        displayedActivities[index]['imagePath'],
-                        displayedActivities[index]['price'],
-                        displayedActivities[index]['status'],
-                      );
-                    },
-                  ),
-                ),
+  child: ListView.builder(
+    itemCount: displayedActivities.length,
+    itemBuilder: (context, index) {
+      return _buildActivityCard(
+        context,
+        displayedActivities[index]['title'],
+        displayedActivities[index]['description'],
+        displayedActivities[index]['imagePath'],
+        displayedActivities[index]['price'],
+        displayedActivities[index]['status'],
+        displayedActivities[index]['idsewa'],
+      );
+    },
+  ),
+),
+
               ],
             ),
           ),
@@ -177,51 +182,68 @@ class _ActivityPageState extends State<ActivityPage> {
   }
 
   Widget _buildActivityCard(BuildContext context, String title,
-      String description, String imagePath, String price, String status) {
-    return Card(
-      margin: EdgeInsets.symmetric(vertical: 8),
-      child: ListTile(
-        leading:
-            Image.asset(imagePath, width: 50, height: 50, fit: BoxFit.cover),
-        title: Text(title),
-        subtitle: Text(description),
-        trailing: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(price,
-                style: GoogleFonts.poppins(
-                    color: Colors.orange, fontWeight: FontWeight.bold)),
-            if (status == 'Belum Bayar')
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => PaymentTablePage(
-                            items: [
-                              CartItem(
-                                name: title,
-                                price: int.parse(price),
-                                quantity: 1,
-                                image: imagePath,
-                                description: description,
-                              )
-                            ])), // Sertakan item yang belum dibayar
-                  );
-                },
-                child: Text(
-                  'Belum Bayar',
-                  style: GoogleFonts.poppins(color: Colors.red),
-                ),
-              ),
-            if (status == 'DIkonfirmasi')
-              Text(
-                'Dikonfirmasi',
-                style: GoogleFonts.poppins(color: Colors.green),
-              ),
-          ],
-        ),
+    String description, String imagePath, String price, String status, String idsewa) {
+  final screenWidth = MediaQuery.of(context).size.width;
+
+  return Card(
+    margin: EdgeInsets.symmetric(vertical: 8),
+    child: ListTile(
+      leading:
+          Image.network(imagePath, width: 50, height: 50, fit: BoxFit.cover),
+      title: Text(
+        title,
+        style: TextStyle(fontSize: screenWidth * 0.04), // Ukuran font responsif
       ),
-    );
-  }
+      subtitle: Text(
+        description,
+        style: TextStyle(fontSize: screenWidth * 0.03), // Ukuran font responsif
+      ),
+      trailing: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(price,
+              style: TextStyle(
+                  color: Colors.orange, fontWeight: FontWeight.bold)),
+          if (status == 'Belum Bayar')
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PaymentTablePage(
+                          items: [
+                            CartItem(
+                              name: title,
+                              price: int.parse(price),
+                              quantity: 1,
+                              image: imagePath,
+                              description: description,
+                              idsewa: idsewa,
+                            )
+                          ],
+                          idUser : widget.idUser
+                      )),
+                );
+              },
+              
+              child: Text(
+                'Belum Bayar',
+                style: TextStyle(color: Colors.red,),
+              ),
+            ),
+          if (status == 'Dikonfirmasi')
+            Text(
+              'Dikonfirmasi',
+              style: TextStyle(color: Colors.green),
+            ),
+          if (status == 'Menunggu')
+            Text(
+              'Menunggu',
+              style: TextStyle(color: Colors.blue),
+            ),
+        ],
+      ),
+    ),
+  );
+}
 }

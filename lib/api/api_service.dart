@@ -4,7 +4,7 @@ import 'package:mobile_bl/api/meja.dart'; // Import model Meja
 import 'package:mobile_bl/api/jam_sewa.dart'; // Import model JamSewa
 
 class ApiService {
-  final String baseUrl = 'http://localhost:8000/projek_api/get_sewa.php'; // Ganti dengan URL API Anda
+  final String baseUrl = 'http://cuebilliard.my.id/projek_api/get_sewa.php';
 
   Future<List<JamSewa>> fetchJamSewa(String idMeja, String tanggal) async {
     final response = await http.get(Uri.parse('$baseUrl?idmeja=$idMeja&tanggal=$tanggal'));

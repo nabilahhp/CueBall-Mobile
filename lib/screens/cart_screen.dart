@@ -6,7 +6,8 @@ import '../constans.dart';
 import 'payment.dart';
 
 class CartScreen extends StatefulWidget {
-  const CartScreen({Key? key}) : super(key: key);
+  final String idUser;
+  const CartScreen({Key? key, required this.idUser}) : super(key: key);
 
   @override
   State<CartScreen> createState() => _CartScreenState();
@@ -17,6 +18,11 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     final provider = CartProvider.of(context);
     final finalList = provider.cart;
+
+        int totalItems = 0;
+    for (var item in finalList) {
+      totalItems += item.quantity;
+    }
 
     productQuantity(IconData icon, int index) {
       return GestureDetector(
@@ -190,7 +196,7 @@ class _CartScreenState extends State<CartScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => PaymentPage(items: finalList),
+                      builder: (context) => PaymentPage(items: finalList, totalItems: totalItems, idUser: widget.idUser),
                     ),
                   );
                 },

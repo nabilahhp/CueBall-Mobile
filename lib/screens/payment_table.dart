@@ -378,7 +378,7 @@ class _PaymentTablePageState extends State<PaymentTablePage> {
                           fontWeight: FontWeight.w900,
                           fontSize: 25,
                         ),
-                        desc: "Payment successful! Back to login.",
+                        desc: "Payment successful! Silahkan Tunggu Konfirmasi.",
                         btnOkOnPress: () {
                           Navigator.push(
                             context,

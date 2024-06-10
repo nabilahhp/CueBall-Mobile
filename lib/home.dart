@@ -53,7 +53,7 @@ class _HomeState extends State<home> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => CartScreen()),
+                                builder: (context) => CartScreen(idUser: widget.idUser)),
                           );
                         },
                         icon: Icon(
@@ -245,7 +245,7 @@ class _HomeState extends State<home> {
                     ),
                   ],
                 ),
-                food()
+                food(idUser: widget.idUser)
               ],
             ),
           ),

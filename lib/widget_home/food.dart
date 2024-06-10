@@ -9,7 +9,8 @@ import '../provider/cart_provider.dart';
 import '../models/cart_item.dart';
 
 class food extends StatefulWidget {
-  const food({Key? key}) : super(key: key);
+  final String idUser;
+  const food({Key? key, required this.idUser}) : super(key: key);
 
   @override
   State<food> createState() => _FoodState();
@@ -123,6 +124,7 @@ class _FoodState extends State<food> {
                                             name: makanan.nm,
                                             description: makanan.deskripsi,
                                             price: makanan.harga,
+                                            idUser: widget.idUser,
                                             image: 'lib/image/' + makanan.foto,
                                           );
                                           cartProvider.addToCart(cartItem);
